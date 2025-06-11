@@ -1,0 +1,777 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>爪印物語-個人檔案</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: url('image/555.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .header {
+      background-color: rgba(91, 108, 156, 0.8);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 60px;
+      color: white;
+      margin-bottom: 100px;
+    }
+    .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+    .nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+    }
+    .profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .main {
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .profile-card {
+      display: flex;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+      padding: 30px;
+      width: 80%;
+      max-width: 1000px;
+      margin-bottom: 20px;
+    }
+    .profile-card .right {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .logout-bar {
+      margin-top: auto;
+      width: 100%;
+      border-top: 1px solid #ccc;
+      padding-top: 15px;
+      text-align: center;
+      flex-basis: 100%;
+    }
+    .left {
+      flex: 1;
+      text-align: center;
+      padding-right: 30px;
+      border-right: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .avatar:hover::after {
+      content: "點擊更換頭像";
+      position: absolute;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 14px;
+    }
+    .avatar {
+      position: relative;
+      cursor: pointer;
+    }
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #444;
+      margin-bottom: 15px;
+    }
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .username input {
+      font-size: 18px;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+    }
+    .role {
+      font-size: 14px;
+      color: gray;
+    }
+    .stats {
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    .right {
+      flex: 2;
+      padding-left: 30px;
+    }
+    .about {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: vertical;
+    }
+    .action-btn {
+      margin-top: 10px;
+      padding: 6px 16px;
+      cursor: pointer;
+      background: #556;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      height: 30px;
+      width: 100px;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .nav a {
+      color: white !important;
+      text-decoration: none;
+      font-size: 1.1em;
+    }
+    .nav a:visited,
+    .nav a:hover,
+    .nav a:active,
+    .nav a:focus {
+      color: white !important;
+      text-decoration: none;
+    }
+    .pet-list {
+      width: 80%;
+      max-width: 1000px;
+      background-color: rgba(255, 255, 255);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 40px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    .pet-list h2 {
+      margin-bottom: 15px;
+      font-size: 1.4em;
+      color: #333;
+    }
+    .pets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .pet-card {
+      flex: 1 1 200px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0, 0, 0);
+      padding: 15px;
+      text-align: center;
+    }
+    .pet-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+      border: 2px solid #888;
+    }
+    .pet-card .name {
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+    .pet-card .species {
+      color: gray;
+      font-size: 0.9em;
+    }
+    .posts, .comments, .likes, .favorites {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .post-card, .comment-card, .like-card, .favorite-card {
+      background-color: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0);
+      margin-bottom: 16px;
+    }
+    .post-title, .comment-content, .like-title, .favorite-title {
+      font-weight: bold;
+      font-size: 1em;
+      margin-bottom: 5px;
+    }
+    .post-meta, .comment-meta {
+      font-size: 0.8em;
+      color: gray;
+    }
+    .logo a {
+      color: white;
+      text-decoration: none;
+    }
+    .logo a:visited,
+    .logo a:hover,
+    .logo a:active,
+    .logo a:focus {
+      color: white;
+      text-decoration: none;
+    }
+    .tab-header {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .tab-btn {
+      padding: 8px 16px;
+      background-color: #f0f0f0;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 6px;
+    }
+    .tab-btn.active {
+      background-color: #5b6c9c;
+      color: white;
+    }
+    .tab-content {
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 10px;
+    }
+    .logout-bar {
+      width: 100%;
+      margin-top: 20px;
+      border-top: 1px solid #ccc;
+      padding-top: 15px;
+      text-align: center;
+      flex-basis: 100%;
+    }
+    .logout-btn {
+      padding: 8px 20px;
+      background-color: #b23b3b;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .logout-btn:hover {
+      background-color: #922d2d;
+    }
+    .edit-btn {
+      margin-top: 10px;
+      padding: 4px 14px;
+      background: #5b6c9c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .edit-btn:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+    .delete-btn {
+      margin-top: 10px;
+      padding: 4px 14px;
+      background: #b23b3b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+    .delete-btn:hover {
+      background: #922d2d;
+    }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="logo"><a href="index_login.html">The Pet Forum</a></div>
+  <nav class="nav">
+    <a href="index_login.html">論壇</a>
+    <a href="news.html">新聞</a>
+    <a href="adopt.html">領養</a>
+    <a href="#" class="profile-icon">
+      <img id="navAvatarImg" src="" alt="頭像" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+    </a>
+  </nav>
+</header>
+
+<main class="main">
+  <section class="profile-card">
+    <div class="left">
+      <input type="file" id="avatarUpload" accept="image/*" style="display:none" onchange="uploadAvatar(event)">
+      <div class="avatar" onclick="document.getElementById('avatarUpload').click()">
+        <img id="avatarImg" src="" alt="頭像" />
+      </div>
+      <div class="username"><input id="usernameInput" /></div>
+      <div class="role" id="roleText"></div>
+    </div>
+    <div class="right">
+
+      <label for="userNameEdit">暱稱：</label>
+      <input type="text" id="userNameEdit" style="width: 100%; padding: 6px; margin-bottom: 10px; font-size: 14px;" />
+
+      <h3>個人簡介</h3>
+      <textarea class="about" id="aboutInput"></textarea>
+
+      <button onclick="submitProfile()" class="action-btn" style="background-color: rgba(91, 108, 156);">儲存變更</button>
+
+      <!-- 管理員專屬管理區塊 -->
+      <div id="adminPanel" style="display:none; margin-top: 16px;">
+        <button class="action-btn" onclick="location.href='admin_posts.html'">管理貼文</button>
+        <button class="action-btn" onclick="location.href='admin_users.html'">管理使用者</button>
+        <button class="action-btn" onclick="location.href='create_pet.html'">管理寵物</button>
+        <button class="action-btn" onclick="location.href='adopt_review.html'">審核領養者</button>
+      </div>
+
+      <div id="editPanel" style="display:none; margin-top: 16px;">
+        <button class="action-btn" onclick="location.href='create_news.html'">新增貼文</button>
+        <button class="action-btn" onclick="location.href='admin_pet.html'">管理寵物</button>
+      </div>
+
+      <div class="logout-bar">
+        <button class="logout-btn" onclick="logout()">登出</button>
+      </div>
+
+    </div>
+
+  </section>
+
+  <br>
+
+  <section class="pet-tabs">
+    <div class="tab-header">
+      <button class="tab-btn active" onclick="showTab('posts')">🐾 我的發文</button>
+      <button class="tab-btn" onclick="showTab('comments')">💬 我的留言</button>
+      <button class="tab-btn" onclick="showTab('likes')">❤️ 按讚文章</button>
+      <button class="tab-btn" onclick="showTab('favorites')">⭐ 我的收藏</button>
+    </div>
+
+    <div class="tab-content" id="postsTab">
+      <div id="myPostsContainer"></div>
+    </div>
+    <div class="tab-content" id="commentsTab" style="display:none">
+      <div id="myCommentsContainer"></div>
+    </div>
+    <div class="tab-content" id="likesTab" style="display:none">
+      <div id="myLikesContainer"></div>
+    </div>
+    <div class="tab-content" id="favoritesTab" style="display:none">
+      <div id="myFavoritesContainer"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const userId = localStorage.getItem("userId");
+    const userName = localStorage.getItem("userName") || "未登入";
+
+    if (!userId) {
+      alert("尚未登入");
+      window.location.href = "/index.html";
+      return;
+    }
+
+    // 先 fetch 最新的 role 並 update UI
+    fetch(`/api/users/${userId}`)
+            .then(res => res.json())
+            .then(user => {
+              localStorage.setItem("userRole", user.role);
+              updateRoleUI();
+            });
+
+    // 設定大頭貼
+    const avatarImg = document.getElementById("avatarImg");
+    const navAvatarImg = document.getElementById("navAvatarImg");
+    const avatarUrl = `/api/users/${userId}/avatar`;
+
+    if (avatarImg) avatarImg.src = avatarUrl;
+    if (navAvatarImg) navAvatarImg.src = avatarUrl;
+
+    // 設定暱稱、角色
+    document.getElementById("userNameEdit").value = userName;
+    document.getElementById("usernameInput").value = userName;
+    document.querySelector(".username").innerHTML = `<strong>${userName}</strong>`;
+
+    // 載入個人簡介
+    fetch(`/api/users/${userId}/bio`)
+            .then(res => res.ok ? res.json() : Promise.reject("無法取得個人簡介"))
+            .then(data => {
+              document.getElementById("aboutInput").value = data.bio || "";
+            })
+            .catch(err => console.warn(err));
+
+    updateRoleUI()
+    // 根據角色顯示正確稱謂及管理員功能
+
+    function updateRoleUI() {
+      const role = (localStorage.getItem("userRole") || "").toUpperCase();
+      let roleDisplay = "";
+      if (role === "ADMIN") {
+        roleDisplay = "管理者";
+      } else if (role === "EDIT") {
+        roleDisplay = "版主";
+      } else {
+        roleDisplay = "使用者";
+      }
+      document.getElementById("roleText").textContent = roleDisplay;
+
+      // 依身分決定哪些功能顯示
+      if (role === "ADMIN") {
+        document.getElementById("adminPanel").style.display = "";   // 管理者功能顯示
+        document.getElementById("editPanel").style.display = "none";
+      } else if (role === "EDIT") {
+        document.getElementById("adminPanel").style.display = "none";
+        document.getElementById("editPanel").style.display = "";    // 版主功能顯示
+      } else {
+        document.getElementById("adminPanel").style.display = "none";
+        document.getElementById("editPanel").style.display = "none";
+      }
+    }
+
+    // 載入發文（讓整張 post-card 可點擊，編輯/刪除不會觸發跳轉。顯示更新時間）
+    fetch(`/api/users/${userId}/posts`)
+            .then(res => res.json())
+            .then(posts => {
+              const container = document.getElementById("myPostsContainer");
+              container.innerHTML = "";
+              posts.forEach(post => {
+                const card = document.createElement("div");
+                card.className = "post-card";
+                card.id = `post-${post.id}`;
+                card.style.position = "relative";
+                card.style.cursor = "pointer";
+
+                // 點擊整張卡片跳詳情（編輯/刪除不跳轉）
+                card.addEventListener("click", function(e) {
+                  if (
+                          e.target.classList.contains("edit-btn") ||
+                          e.target.classList.contains("delete-btn")
+                  ) return;
+                  window.location.href = `postdetailview.html?postId=${post.id}`;
+                });
+
+                // 判斷顯示發布於還是發布於＋更新於
+                const created = post.createdAt || post.created_at;
+                const updated = post.updatedAt || post.updated_at;
+                let metaHTML = `<div>發布於：${new Date(created).toLocaleString()}</div>`;
+                if (
+                        updated &&
+                        new Date(updated).getTime() !== new Date(created).getTime()
+                ) {
+                  metaHTML += `<div>更新於：${new Date(updated).toLocaleString()}</div>`;
+                }
+
+                card.innerHTML = `
+            <div class="post-title">${post.title}</div>
+            <div class="post-meta">${metaHTML}</div>
+            <button class="edit-btn" type="button">編輯</button>
+            <button class="delete-btn" type="button">刪除</button>
+          `;
+
+                card.querySelector(".edit-btn").addEventListener("click", function(e) {
+                  e.stopPropagation();
+                  editPost(post.id);
+                });
+                card.querySelector(".delete-btn").addEventListener("click", function(e) {
+                  e.stopPropagation();
+                  deletePost(post.id);
+                });
+
+                container.appendChild(card);
+              });
+            });
+
+    // 載入留言（加上編輯和刪除功能）
+    fetch(`/api/users/${userId}/comments`)
+            .then(res => res.json())
+            .then(comments => {
+              const container = document.getElementById("myCommentsContainer");
+              container.innerHTML = "";
+              comments.forEach(comment => {
+                const card = document.createElement("div");
+                card.className = "comment-card";
+                card.id = `comment-${comment.id}`;
+                card.style.position = "relative";
+
+                card.addEventListener("click", function(e) {
+                  if (
+                          e.target.classList.contains("edit-btn") ||
+                          e.target.classList.contains("delete-btn")
+                  ) return;
+                  window.location.href = `postdetailview.html?postId=${comment.post && comment.post.id ? comment.post.id : ''}`;
+                });
+
+                const created = comment.createdAt || comment.created_at;
+                const updated = comment.updatedAt || comment.updated_at;
+                let metaHTML = `<div>發布於：${new Date(created).toLocaleString()}</div>`;
+                if (updated && new Date(updated).getTime() !== new Date(created).getTime()) {
+                  metaHTML += `<div>更新於：${new Date(updated).toLocaleString()}</div>`;
+                }
+
+                card.innerHTML = `
+            <div class="comment-content">${comment.content}</div>
+            <div class="comment-meta">
+              留言於文章：「${comment.post && comment.post.title ? comment.post.title : "未知"}」
+              ${metaHTML}
+            </div>
+            <button class="edit-btn" type="button">編輯</button>
+            <button class="delete-btn" type="button">刪除</button>
+          `;
+
+                card.querySelector(".edit-btn").addEventListener("click", function(e) {
+                  e.stopPropagation();
+                  editComment(comment.id, comment.post && comment.post.id ? comment.post.id : null);
+                });
+                card.querySelector(".delete-btn").addEventListener("click", function(e) {
+                  e.stopPropagation();
+                  deleteComment(comment.id);
+                });
+
+                container.appendChild(card);
+              });
+            });
+
+    // 編輯留言
+    function editComment(commentId, postId) {
+      if (!postId) {
+        alert("找不到這則留言所屬的文章，無法編輯。");
+        return;
+      }
+      window.location.href = `postdetailview.html?postId=${postId}#comment-${commentId}`;
+    }
+
+    // 刪除留言功能
+    function deleteComment(commentId) {
+      if (!confirm("確定要刪除這則留言嗎？")) return;
+      fetch(`/api/comments/${commentId}`, { method: "DELETE" })
+              .then(res => {
+                if (res.ok) {
+                  alert("留言已刪除！");
+                  const card = document.getElementById(`comment-${commentId}`);
+                  if (card) card.remove();
+                } else {
+                  res.text().then(msg => alert("刪除留言失敗: " + msg));
+                }
+              })
+              .catch(err => alert("刪除留言失敗: " + err));
+    }
+
+    // 按讚文章
+    fetch(`/api/users/${userId}/likes`)
+            .then(res => res.json())
+            .then(likes => {
+              const container = document.getElementById("myLikesContainer");
+              if (!Array.isArray(likes) || likes.length === 0) {
+                container.innerHTML = "<div>目前沒有按讚任何文章</div>";
+                return;
+              }
+              Promise.all(likes.map(like =>
+                      fetch(`/api/posts/${like.postId}`)
+                              .then(res => res.json())
+                              .then(post => ({
+                                likeId: like.id,
+                                title: post.title,
+                                username: post.username,
+                                createdAt: post.createdAt
+                              }))
+              )).then(posts => {
+                container.innerHTML = posts.map(post => `
+            <div class="like-card">
+              <div class="like-title">${post.title}</div>
+              <div class="post-meta">作者：${post.username}</div>
+            </div>
+          `).join("");
+              });
+            });
+
+    // 載入收藏（顯示標題與作者）
+    fetch(`/api/users/${userId}/favorites`)
+            .then(res => res.json())
+            .then(favorites => {
+              const container = document.getElementById("myFavoritesContainer");
+              if (!Array.isArray(favorites) || favorites.length === 0) {
+                container.innerHTML = "<div>目前沒有收藏任何文章</div>";
+                return;
+              }
+              Promise.all(favorites.map(fav =>
+                      fetch(`/api/posts/${fav.postId}`)
+                              .then(res => res.json())
+                              .then(post => ({
+                                favoriteId: fav.id,
+                                title: post.title,
+                                username: post.username || (post.author && post.author.username) || "未知作者",
+                                createdAt: post.createdAt
+                              }))
+              )).then(posts => {
+                container.innerHTML = posts.map(post => `
+            <div class="favorite-card">
+              <div class="favorite-title">${post.title}</div>
+              <div class="post-meta">作者：${post.username}</div>
+            </div>
+          `).join("");
+              });
+            });
+
+    // 你可以在登入後或切換帳號時呼叫 updateRoleUI() 達到即時切換
+    // 例如：localStorage.setItem("userRole", "ADMIN"); updateRoleUI();
+
+  });
+
+  // 上傳頭像
+  function uploadAvatar(event) {
+    const userId = localStorage.getItem("userId");
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    fetch(`/api/users/${userId}/avatar`, {
+      method: "POST",
+      body: formData
+    })
+            .then(res => res.text())
+            .then(msg => {
+              alert(msg);
+              const newUrl = `/api/users/${userId}/avatar?time=${Date.now()}`;
+              document.getElementById("avatarImg").src = newUrl;
+              document.getElementById("navAvatarImg").src = newUrl;
+            });
+  }
+
+
+
+  function submitProfile() {
+    const userId = localStorage.getItem("userId");
+    const newUsername = document.getElementById("userNameEdit").value.trim();
+    const newBio = document.getElementById("aboutInput").value.trim();
+    const currentUsername = localStorage.getItem("userName");
+    let updated = false;
+
+    // 更新暱稱
+    let promises = [];
+    if (newUsername && newUsername !== currentUsername) {
+      promises.push(
+              fetch(`/api/users/${userId}/username`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username: newUsername })
+              })
+                      .then(res => {
+                        if (res.ok) {
+                          alert("暱稱已更新！");
+                          localStorage.setItem("userName", newUsername);
+                          updated = true;
+                        } else {
+                          res.text().then(msg => alert("暱稱更新失敗: " + msg));
+                        }
+                      })
+      );
+    }
+
+    // 更新個人簡介
+    promises.push(
+            fetch(`/api/users/${userId}/bio`)
+                    .then(res => res.ok ? res.json() : Promise.reject("無法取得原始 bio"))
+                    .then(data => {
+                      if (newBio !== (data.bio || "")) {
+                        return fetch(`/api/users/${userId}/bio`, {
+                          method: "PUT",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ bio: newBio })
+                        })
+                                .then(res => {
+                                  if (res.ok) {
+                                    alert("個人簡介已更新！");
+                                    updated = true;
+                                  } else {
+                                    res.text().then(msg => alert("個人簡介更新失敗: " + msg));
+                                  }
+                                });
+                      }
+                    })
+    );
+
+    Promise.all(promises).then(() => {
+      if (updated) {
+        location.reload();
+      } else {
+        alert("沒有修改內容，不需儲存");
+      }
+    });
+  }
+
+
+  function showTab(tab) {
+    const allTabs = ['posts', 'comments', 'likes', 'favorites'];
+    allTabs.forEach(t => {
+      document.getElementById(t + 'Tab').style.display = (t === tab) ? 'block' : 'none';
+      document.querySelector(`.tab-btn[onclick="showTab('${t}')"]`).classList.toggle('active', t === tab);
+    });
+  }
+
+  function editPost(postId) {
+    window.location.href = `postedit.html?postId=${postId}`;
+  }
+
+  function deletePost(postId) {
+    if (!confirm("確定要刪除這篇文章嗎？")) return;
+    fetch(`/api/posts/${postId}`, { method: "DELETE" })
+            .then(res => {
+              if (res.ok) {
+                alert("刪除成功！");
+                const postCard = document.getElementById(`post-${postId}`);
+                if (postCard) postCard.remove();
+              } else {
+                res.text().then(msg => alert("刪除失敗: " + msg));
+              }
+            })
+            .catch(err => alert("刪除失敗: " + err));
+  }
+
+  function editComment(commentId, postId) {
+    window.location.href = `postdetailview.html?postId=${postId}#comment-${commentId}`;
+  }
+
+  function logout() {
+    localStorage.clear();
+    window.location.href = "/index.html";
+  }
+</script>
+</body>
+</html>

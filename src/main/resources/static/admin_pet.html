@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <title>爪印物語-寵物後台管理</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: #f3f6fa;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 16px #ccc;
+            padding: 30px;
+        }
+        h1 {
+            color: #344;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px 8px;
+            text-align: left;
+        }
+        th {
+            background: #f4f6fa;
+        }
+        .action-btn {
+            padding: 4px 12px;
+            background: #b23b3b;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 4px;
+        }
+        .action-btn.view {
+            background: #5c9c7c;
+        }
+        .search-bar input {
+            padding: 6px;
+            width: 200px;
+        }
+        tbody tr:hover {
+            background: #e6f0fa;
+            transition: background 0.15s;
+        }
+        #pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #pagination button {
+            margin: 0 2px;
+            padding: 4px 10px;
+            border: 1px solid #bbb;
+            background: #fff;
+            color: #344;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #pagination button[disabled] {
+            background: #e6f0fa;
+            color: #aaa;
+            cursor: default;
+        }
+        #pagination button.current {
+            background: #e6f0fa;
+            color: #344;
+            font-weight: bold;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        .search-bar {
+            flex: 1 1 auto;
+        }
+        .toolbar-right {
+            flex-shrink: 0;
+        }
+        .primary-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #566c47;
+            color: white;
+            text-decoration: none;
+        }
+        body, header {
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+        main {
+            padding-top: 100px;
+        }
+        .navbar {
+            background-color: rgba(91, 108, 156, 0.6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 24px;
+            width: 100vw;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
+        .logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        .logo a:visited,
+        .logo a:hover,
+        .logo a:active,
+        .logo a:focus {
+            color: white;
+            text-decoration: none;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            letter-spacing: 1px;
+            margin: 0 20px;
+        }
+        nav a:visited,
+        nav a:hover,
+        nav a:active,
+        nav a:focus {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<header>
+    <div class="navbar">
+        <div class="logo"><a href="index_login.html">The Pet Forum</a></div>
+        <nav>
+            <a href="index_login.html">論壇</a>
+            <a href="QAindex.html">毛孩大考驗</a>
+            <a href="adopt.html">領養</a>
+            <a onclick="history.back()">返回前頁</a>
+        </nav>
+    </div>
+</header>
+<body>
+<div style="height: 100px;"></div>
+<div class="container">
+    <h1>寵物管理</h1>
+    <div class="toolbar">
+        <div class="search-bar">
+            <input type="text" id="searchInput" class="search-box" placeholder="🔍 搜尋" />
+        </div>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>寵物名稱</th>
+            <th>品種</th>
+            <th>年齡</th>
+            <th>性別</th>
+            <th>飼主帳號</th>
+            <th>註冊時間</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="petsTbody">
+        <tr><td colspan="7" style="text-align:center;">載入中...</td></tr>
+        </tbody>
+    </table>
+    <div id="pagination"></div>
+</div>
+<script>
+    let lastPetsData = [];
+    let currentPage = 1;
+    const pageSize = 20;
+
+    function loadPets() {
+        const keyword = document.getElementById('searchInput').value.trim();
+        let url = "/api/admin/pets";
+        if (keyword) url += "?q=" + encodeURIComponent(keyword);
+        fetch(url)
+            .then(res => {
+                if (!res.ok) throw new Error("API 錯誤");
+                return res.json();
+            })
+            .then(pets => {
+                if (!Array.isArray(pets)) pets = [];
+                lastPetsData = pets;
+                currentPage = 1;
+                renderPets(pets, currentPage);
+            })
+            .catch(err => {
+                const tbody = document.getElementById('petsTbody');
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#c00;">載入失敗</td></tr>`;
+                document.getElementById('pagination').innerHTML = "";
+                console.warn(err);
+            });
+    }
+
+    function renderPets(pets, page = 1) {
+        const tbody = document.getElementById('petsTbody');
+        if (!pets || pets.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">查無資料</td></tr>`;
+            document.getElementById('pagination').innerHTML = "";
+            return;
+        }
+        // 分頁
+        const start = (page - 1) * pageSize;
+        const end = start + pageSize;
+        const pagePets = pets.slice(start, end);
+
+        tbody.innerHTML = pagePets.map(pet => {
+            let name = pet.name || "未知";
+            let breed = pet.breed || "—";
+            let age = pet.age !== undefined ? pet.age : "—";
+            let gender = pet.gender === "F" ? "母" : (pet.gender === "M" ? "公" : "—");
+            let owner = (pet.owner && pet.owner.username) ? pet.owner.username : (pet.ownerAccount || "—");
+            let created = pet.createdAt ? new Date(pet.createdAt).toLocaleString() : "";
+            return `
+        <tr>
+          <td>${name}</td>
+          <td>${breed}</td>
+          <td>${age}</td>
+          <td>${gender}</td>
+          <td>${owner}</td>
+          <td>${created}</td>
+          <td>
+            <button class="action-btn view" onclick="viewPet(${pet.id})">查看</button>
+            <button class="action-btn" onclick="deletePet(${pet.id})">刪除</button>
+          </td>
+        </tr>
+        `;
+        }).join('');
+
+        renderPagination(pets.length, page);
+    }
+
+    function renderPagination(total, page) {
+        const pageCount = Math.ceil(total / pageSize);
+        let html = '';
+
+        if (page > 1) {
+            html += `<button onclick="gotoPage(${page - 1})">&lt;</button>`;
+        } else {
+            html += `<button disabled>&lt;</button>`;
+        }
+        for (let i = 1; i <= pageCount; i++) {
+            if (i === page) {
+                html += `<button class="current" disabled>${i}</button>`;
+            } else {
+                html += `<button onclick="gotoPage(${i})">${i}</button>`;
+            }
+        }
+        if (page < pageCount) {
+            html += `<button onclick="gotoPage(${page + 1})">&gt;</button>`;
+        } else {
+            html += `<button disabled>&gt;</button>`;
+        }
+
+        document.getElementById('pagination').innerHTML = html;
+    }
+
+    function gotoPage(page) {
+        currentPage = page;
+        renderPets(lastPetsData, page);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        if (searchInput) {
+            searchInput.addEventListener("input", function () {
+                filterPets(this.value.trim().toLowerCase());
+            });
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') loadPets();
+            });
+        }
+        loadPets();
+    });
+
+    function filterPets(keyword) {
+        const tbody = document.getElementById('petsTbody');
+        const trs = tbody.querySelectorAll('tr');
+        trs.forEach(tr => {
+            if (tr.children.length < 7) return;
+            const [nameTd, breedTd, ageTd, genderTd, ownerTd, createdTd] = tr.children;
+            const text = (
+                (nameTd.textContent || "") +
+                (breedTd.textContent || "") +
+                (ageTd.textContent || "") +
+                (genderTd.textContent || "") +
+                (ownerTd.textContent || "") +
+                (createdTd.textContent || "")
+            ).toLowerCase();
+
+            if (keyword === "" || text.includes(keyword)) {
+                tr.style.display = "";
+            } else {
+                tr.style.display = "none";
+            }
+        });
+    }
+
+    function viewPet(id) {
+        window.open(`petdetailview.html?petId=${id}`, '_blank');
+    }
+    function deletePet(id) {
+        if (!confirm("確定要刪除這個寵物資料嗎？")) return;
+        fetch(`/api/pets/${id}`, { method: "DELETE" })
+            .then(res => {
+                if (res.ok) {
+                    alert("刪除成功！");
+                    loadPets();
+                } else {
+                    res.text().then(msg => alert("刪除失敗：" + msg));
+                }
+            });
+    }
+</script>
+</body>
+</html>

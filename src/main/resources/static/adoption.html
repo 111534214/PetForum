@@ -1,0 +1,1273 @@
+<!--&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;-->
+<!--&lt;!&ndash;<html lang="zh-Hant">&ndash;&gt;-->
+<!--&lt;!&ndash;<head>&ndash;&gt;-->
+<!--&lt;!&ndash;  <meta charset="UTF-8" />&ndash;&gt;-->
+<!--&lt;!&ndash;  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>&ndash;&gt;-->
+<!--&lt;!&ndash;  <title>爪印物語-寵物領養</title>&ndash;&gt;-->
+<!--&lt;!&ndash;  <style>&ndash;&gt;-->
+<!--&lt;!&ndash;    body {&ndash;&gt;-->
+<!--&lt;!&ndash;      margin: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;      font-family: 'Segoe UI', sans-serif;&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: #f8f9fa;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    header {&ndash;&gt;-->
+<!--&lt;!&ndash;      display: flex;&ndash;&gt;-->
+<!--&lt;!&ndash;      justify-content: space-between;&ndash;&gt;-->
+<!--&lt;!&ndash;      align-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: rgba(91, 108, 156, 0.8);&ndash;&gt;-->
+<!--&lt;!&ndash;      padding: 20px 60px;&ndash;&gt;-->
+<!--&lt;!&ndash;      color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;    .logo a {&ndash;&gt;-->
+<!--&lt;!&ndash;      font-size: 1em;               /* 調小字體 */&ndash;&gt;-->
+<!--&lt;!&ndash;      font-weight: normal;          /* 改為正常粗細，或使用 500 */&ndash;&gt;-->
+<!--&lt;!&ndash;      color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;      text-decoration: none;&ndash;&gt;-->
+<!--&lt;!&ndash;      padding: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;      margin: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;      box-shadow: none;             /* 確保沒有外框 */&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;    .logo a:visited,&ndash;&gt;-->
+<!--&lt;!&ndash;    .logo a:hover,&ndash;&gt;-->
+<!--&lt;!&ndash;    .logo a:active,&ndash;&gt;-->
+<!--&lt;!&ndash;    .logo a:focus {&ndash;&gt;-->
+<!--&lt;!&ndash;      color: white;             /* 維持白色 */&ndash;&gt;-->
+<!--&lt;!&ndash;      text-decoration: none;    /* 確保所有狀態都沒底線 */&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    header h1 {&ndash;&gt;-->
+<!--&lt;!&ndash;      margin: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;      font-size: 2.5rem;&ndash;&gt;-->
+<!--&lt;!&ndash;      color:black;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .pet-container {&ndash;&gt;-->
+<!--&lt;!&ndash;      display: grid;&ndash;&gt;-->
+<!--&lt;!&ndash;      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));&ndash;&gt;-->
+<!--&lt;!&ndash;      gap: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;      padding: 2rem;&ndash;&gt;-->
+<!--&lt;!&ndash;      max-width: 1200px;&ndash;&gt;-->
+<!--&lt;!&ndash;      margin: auto;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .pet-card {&ndash;&gt;-->
+<!--&lt;!&ndash;      background: white;&ndash;&gt;-->
+<!--&lt;!&ndash;      border-radius: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);&ndash;&gt;-->
+<!--&lt;!&ndash;      overflow: hidden;&ndash;&gt;-->
+<!--&lt;!&ndash;      transition: transform 0.3s;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .pet-card:hover {&ndash;&gt;-->
+<!--&lt;!&ndash;      transform: translateY(-5px);&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .pet-card img {&ndash;&gt;-->
+<!--&lt;!&ndash;      width: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;      height: 200px;&ndash;&gt;-->
+<!--&lt;!&ndash;      object-fit: cover;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .pet-info {&ndash;&gt;-->
+<!--&lt;!&ndash;      padding: 1rem;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .pet-info h3 {&ndash;&gt;-->
+<!--&lt;!&ndash;      margin: 0 0 0.5rem;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .pet-info p {&ndash;&gt;-->
+<!--&lt;!&ndash;      margin: 0.25rem 0;&ndash;&gt;-->
+<!--&lt;!&ndash;      color: #555;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .adopt-btn {&ndash;&gt;-->
+<!--&lt;!&ndash;      display: inline-block;&ndash;&gt;-->
+<!--&lt;!&ndash;      margin-top: 1rem;&ndash;&gt;-->
+<!--&lt;!&ndash;      padding: 0.5rem 1.5rem;&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color:  rgb(46, 61, 102);&ndash;&gt;-->
+<!--&lt;!&ndash;      color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;      border: none;&ndash;&gt;-->
+<!--&lt;!&ndash;      border-radius: 30px;&ndash;&gt;-->
+<!--&lt;!&ndash;      cursor: pointer;&ndash;&gt;-->
+<!--&lt;!&ndash;      transition: background-color 0.3s;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .adopt-btn:hover {&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: rgb(46, 61, 102);&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    @media (max-width: 600px) {&ndash;&gt;-->
+<!--&lt;!&ndash;      header h1 {&ndash;&gt;-->
+<!--&lt;!&ndash;        font-size: 2rem;&ndash;&gt;-->
+<!--&lt;!&ndash;      }&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+<!--&lt;!&ndash;    .navbar {&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: rgba(91, 108, 156, 0.8);&ndash;&gt;-->
+<!--&lt;!&ndash;      display: flex;&ndash;&gt;-->
+<!--&lt;!&ndash;      justify-content: space-between;&ndash;&gt;-->
+<!--&lt;!&ndash;      align-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;      padding: 20px 60px;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .nav-links {&ndash;&gt;-->
+<!--&lt;!&ndash;      display: flex;&ndash;&gt;-->
+<!--&lt;!&ndash;      gap: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;      align-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .nav-links a {&ndash;&gt;-->
+<!--&lt;!&ndash;      color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;      text-decoration: none;&ndash;&gt;-->
+<!--&lt;!&ndash;      font-weight: 500;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .nav-links .login {&ndash;&gt;-->
+<!--&lt;!&ndash;      font-weight: bold;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .navbar .logo {&ndash;&gt;-->
+<!--&lt;!&ndash;      font-size: 1em; /* 讓文字不要特別大 */&ndash;&gt;-->
+<!--&lt;!&ndash;      font-weight: 500; /* 避免過粗 */&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .navbar .logo a {&ndash;&gt;-->
+<!--&lt;!&ndash;      color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;      text-decoration: none;&ndash;&gt;-->
+<!--&lt;!&ndash;      border: none; /* 移除外框 */&ndash;&gt;-->
+<!--&lt;!&ndash;      font-weight: 500;&ndash;&gt;-->
+<!--&lt;!&ndash;      font-size: 1em;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .navbar nav a {&ndash;&gt;-->
+<!--&lt;!&ndash;      margin-left: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;      text-decoration: none;&ndash;&gt;-->
+<!--&lt;!&ndash;      color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;      font-weight: 500;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+<!--&lt;!&ndash;    .nav-right {&ndash;&gt;-->
+<!--&lt;!&ndash;      display: flex;&ndash;&gt;-->
+<!--&lt;!&ndash;      align-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;      gap: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+<!--&lt;!&ndash;    .nav-right a {&ndash;&gt;-->
+<!--&lt;!&ndash;      color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;      text-decoration: none;&ndash;&gt;-->
+<!--&lt;!&ndash;      font-weight: 500;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .navbar .login {&ndash;&gt;-->
+<!--&lt;!&ndash;      font-weight: bold;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+<!--&lt;!&ndash;    .logo,&ndash;&gt;-->
+<!--&lt;!&ndash;    .logo a,&ndash;&gt;-->
+<!--&lt;!&ndash;    nav a,&ndash;&gt;-->
+<!--&lt;!&ndash;    .hero h1,&ndash;&gt;-->
+<!--&lt;!&ndash;    .hero h2 {&ndash;&gt;-->
+<!--&lt;!&ndash;      user-select: none;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .dropdown {&ndash;&gt;-->
+<!--&lt;!&ndash;      position: relative;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .dropdown-menu {&ndash;&gt;-->
+<!--&lt;!&ndash;      display: none;&ndash;&gt;-->
+<!--&lt;!&ndash;      position: absolute;&ndash;&gt;-->
+<!--&lt;!&ndash;      top: 30px;&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: rgba(255, 255, 255, 0.95);&ndash;&gt;-->
+<!--&lt;!&ndash;      border-radius: 8px;&ndash;&gt;-->
+<!--&lt;!&ndash;      padding: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);&ndash;&gt;-->
+<!--&lt;!&ndash;      z-index: 100;&ndash;&gt;-->
+<!--&lt;!&ndash;      min-width: 160px;&ndash;&gt;-->
+<!--&lt;!&ndash;      right: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .dropdown-menu button {&ndash;&gt;-->
+<!--&lt;!&ndash;      background: none;&ndash;&gt;-->
+<!--&lt;!&ndash;      border: none;&ndash;&gt;-->
+<!--&lt;!&ndash;      padding: 8px 12px;&ndash;&gt;-->
+<!--&lt;!&ndash;      text-align: left;&ndash;&gt;-->
+<!--&lt;!&ndash;      width: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;      font-size: 14px;&ndash;&gt;-->
+<!--&lt;!&ndash;      color: #333;&ndash;&gt;-->
+<!--&lt;!&ndash;      cursor: pointer;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .dropdown-menu button:hover {&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: #f0f0f0;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .dropdown:hover .dropdown-menu {&ndash;&gt;-->
+<!--&lt;!&ndash;      display: block;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+<!--&lt;!&ndash;    .dropdown-menu.show {&ndash;&gt;-->
+<!--&lt;!&ndash;      display: block;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;    .header {&ndash;&gt;-->
+<!--&lt;!&ndash;      display: flex;&ndash;&gt;-->
+<!--&lt;!&ndash;      justify-content: space-between;&ndash;&gt;-->
+<!--&lt;!&ndash;      align-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;      padding: 25px 60px;&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: rgba(91, 108, 156, 0.8);&ndash;&gt;-->
+<!--&lt;!&ndash;      color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .nav {&ndash;&gt;-->
+<!--&lt;!&ndash;      display: flex;&ndash;&gt;-->
+<!--&lt;!&ndash;      align-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;      gap: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .nav a {&ndash;&gt;-->
+<!--&lt;!&ndash;      color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;      text-decoration: none;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+<!--&lt;!&ndash;    body.dark-mode::before {&ndash;&gt;-->
+<!--&lt;!&ndash;      content: "";&ndash;&gt;-->
+<!--&lt;!&ndash;      position: fixed;&ndash;&gt;-->
+<!--&lt;!&ndash;      top: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;      left: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;      width: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;      height: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: rgba(0, 0, 0, 0.4); /* 可調整透明度 */&ndash;&gt;-->
+<!--&lt;!&ndash;      z-index: -1;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;    body.dark-mode main {&ndash;&gt;-->
+<!--&lt;!&ndash;      background: #2a2a2a;&ndash;&gt;-->
+<!--&lt;!&ndash;      color: #eee;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    body.dark-mode .navbar,&ndash;&gt;-->
+<!--&lt;!&ndash;    body.dark-mode .header {&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: rgba(40, 40, 60, 0.8);&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    body.dark-mode .navbar .logo,&ndash;&gt;-->
+<!--&lt;!&ndash;    body.dark-mode .navbar .nav-right a,&ndash;&gt;-->
+<!--&lt;!&ndash;    body.dark-mode .navbar .login {&ndash;&gt;-->
+<!--&lt;!&ndash;      color: #eee;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    body.dark-mode .dropdown-menu {&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: rgba(50, 50, 50, 0.95);&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    body.dark-mode .dropdown-menu button {&ndash;&gt;-->
+<!--&lt;!&ndash;      color: #eee;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    body.dark-mode .dropdown-menu button:hover {&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: #444;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    body.dark-mode .quote {&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: rgba(60, 60, 60, 0.8);&ndash;&gt;-->
+<!--&lt;!&ndash;      color: #eee;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    body.dark-mode .subscribe {&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: #222;&ndash;&gt;-->
+<!--&lt;!&ndash;      color: #ddd;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    body.dark-mode .subscribe input[type="email"] {&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: #444;&ndash;&gt;-->
+<!--&lt;!&ndash;      color: #eee;&ndash;&gt;-->
+<!--&lt;!&ndash;      border: 1px solid #666;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    body.dark-mode .search-box {&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: #444;&ndash;&gt;-->
+<!--&lt;!&ndash;      color: #eee;&ndash;&gt;-->
+<!--&lt;!&ndash;      border: 1px solid #666;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    body.dark-mode .action-btn {&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: #333;&ndash;&gt;-->
+<!--&lt;!&ndash;      color: #eee;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    body.dark-mode .primary-btn {&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: #4a6a40;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+<!--&lt;!&ndash;    #darkModeToggle:hover {&ndash;&gt;-->
+<!--&lt;!&ndash;      opacity: 0.8;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+<!--&lt;!&ndash;    .header-title {&ndash;&gt;-->
+<!--&lt;!&ndash;      text-align: center;&ndash;&gt;-->
+<!--&lt;!&ndash;      padding: 1.5rem 0;&ndash;&gt;-->
+<!--&lt;!&ndash;      color: black;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .header-title h1 {&ndash;&gt;-->
+<!--&lt;!&ndash;      font-size: 2.2rem;&ndash;&gt;-->
+<!--&lt;!&ndash;      margin-bottom: 0.5rem;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .header-title p {&ndash;&gt;-->
+<!--&lt;!&ndash;      font-size: 1.1rem;&ndash;&gt;-->
+<!--&lt;!&ndash;      color: black;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;    .modal {&ndash;&gt;-->
+<!--&lt;!&ndash;      display: none;&ndash;&gt;-->
+<!--&lt;!&ndash;      position: fixed;&ndash;&gt;-->
+<!--&lt;!&ndash;      z-index: 999;&ndash;&gt;-->
+<!--&lt;!&ndash;      left: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;      top: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;      width: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;      height: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;      overflow: auto;&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: rgba(0, 0, 0, 0.6);&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .modal-content {&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: #fff;&ndash;&gt;-->
+<!--&lt;!&ndash;      margin: 10% auto;&ndash;&gt;-->
+<!--&lt;!&ndash;      padding: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;      border-radius: 12px;&ndash;&gt;-->
+<!--&lt;!&ndash;      width: 80%;&ndash;&gt;-->
+<!--&lt;!&ndash;      max-width: 500px;&ndash;&gt;-->
+<!--&lt;!&ndash;      text-align: center;&ndash;&gt;-->
+<!--&lt;!&ndash;      position: relative;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .close-btn {&ndash;&gt;-->
+<!--&lt;!&ndash;      position: absolute;&ndash;&gt;-->
+<!--&lt;!&ndash;      top: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;      right: 15px;&ndash;&gt;-->
+<!--&lt;!&ndash;      font-size: 24px;&ndash;&gt;-->
+<!--&lt;!&ndash;      font-weight: bold;&ndash;&gt;-->
+<!--&lt;!&ndash;      color: #888;&ndash;&gt;-->
+<!--&lt;!&ndash;      cursor: pointer;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    #confirmAdopt {&ndash;&gt;-->
+<!--&lt;!&ndash;      margin-top: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;      padding: 0.5rem 1.5rem;&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: rgb(46, 61, 102);&ndash;&gt;-->
+<!--&lt;!&ndash;      color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;      border: none;&ndash;&gt;-->
+<!--&lt;!&ndash;      border-radius: 30px;&ndash;&gt;-->
+<!--&lt;!&ndash;      cursor: pointer;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .modal {&ndash;&gt;-->
+<!--&lt;!&ndash;      display: none;&ndash;&gt;-->
+<!--&lt;!&ndash;      position: fixed;&ndash;&gt;-->
+<!--&lt;!&ndash;      z-index: 999;&ndash;&gt;-->
+<!--&lt;!&ndash;      left: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;      top: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;      width: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;      height: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;      overflow: auto;&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: rgba(0, 0, 0, 0.6);&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .modal-content {&ndash;&gt;-->
+<!--&lt;!&ndash;      background-color: #fff;&ndash;&gt;-->
+<!--&lt;!&ndash;      margin: 10% auto;&ndash;&gt;-->
+<!--&lt;!&ndash;      padding: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;      border-radius: 12px;&ndash;&gt;-->
+<!--&lt;!&ndash;      width: 80%;&ndash;&gt;-->
+<!--&lt;!&ndash;      max-width: 500px;&ndash;&gt;-->
+<!--&lt;!&ndash;      text-align: center;&ndash;&gt;-->
+<!--&lt;!&ndash;      position: relative;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .close-btn {&ndash;&gt;-->
+<!--&lt;!&ndash;      position: absolute;&ndash;&gt;-->
+<!--&lt;!&ndash;      top: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;      right: 15px;&ndash;&gt;-->
+<!--&lt;!&ndash;      font-size: 24px;&ndash;&gt;-->
+<!--&lt;!&ndash;      font-weight: bold;&ndash;&gt;-->
+<!--&lt;!&ndash;      color: #888;&ndash;&gt;-->
+<!--&lt;!&ndash;      cursor: pointer;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    .modal-content input,&ndash;&gt;-->
+<!--&lt;!&ndash;    .modal-content textarea {&ndash;&gt;-->
+<!--&lt;!&ndash;      width: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;      padding: 0.5rem;&ndash;&gt;-->
+<!--&lt;!&ndash;      margin-top: 0.3rem;&ndash;&gt;-->
+<!--&lt;!&ndash;      border: 1px solid #ccc;&ndash;&gt;-->
+<!--&lt;!&ndash;      border-radius: 6px;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--&lt;!&ndash;  </style>&ndash;&gt;-->
+<!--&lt;!&ndash;</head>&ndash;&gt;-->
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<header>&ndash;&gt;-->
+<!--&lt;!&ndash;  <div class="navbar">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="logo">&ndash;&gt;-->
+<!--&lt;!&ndash;      <a href="index.html">The Pet Forum</a>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  <nav class="nav-right">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="dropdown">&ndash;&gt;-->
+<!--&lt;!&ndash;      <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">論壇</a>&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="dropdown-menu">&ndash;&gt;-->
+<!--&lt;!&ndash;        <button onclick="location.href='forum.html'">主論壇</button>&ndash;&gt;-->
+<!--&lt;!&ndash;        <button onclick="location.href='adoption.html'">領養專區</button>&ndash;&gt;-->
+<!--&lt;!&ndash;        <button onclick="location.href='qa.html'">Q&A</button>&ndash;&gt;-->
+<!--&lt;!&ndash;        <button id="darkModeToggle" title="切換深色模式" style="background: none; border: none; font-size: 20px; cursor: pointer;">🌙</button>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    <a href="#">相關</a>&ndash;&gt;-->
+<!--&lt;!&ndash;    <a href="#">會員</a>&ndash;&gt;-->
+<!--&lt;!&ndash;    <a href="login.html" class="login">登入 / 註冊</a>&ndash;&gt;-->
+<!--&lt;!&ndash;  </nav>&ndash;&gt;-->
+
+<!--&lt;!&ndash;</header>&ndash;&gt;-->
+
+<!--&lt;!&ndash;&lt;!&ndash; 額外文字區塊 &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="header-title">&ndash;&gt;-->
+<!--&lt;!&ndash;  <h1>🐾 寵物領養</h1>&ndash;&gt;-->
+<!--&lt;!&ndash;  <p>找到屬於你的毛小孩吧！</p>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<section class="pet-container">&ndash;&gt;-->
+
+<!--&lt;!&ndash;</section>&ndash;&gt;-->
+
+<!--&lt;!&ndash;&lt;!&ndash; 動物詳細資料 Modal &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<div id="adoptModal" class="modal">&ndash;&gt;-->
+<!--&lt;!&ndash;  <div class="modal-content">&ndash;&gt;-->
+<!--&lt;!&ndash;    <span class="close-btn">&times;</span>&ndash;&gt;-->
+<!--&lt;!&ndash;    <h2>動物詳細資料</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div id="animalDetail"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;    <button id="confirmAdopt">確認領養</button>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<div id="formModal" class="modal">&ndash;&gt;-->
+<!--&lt;!&ndash;  <div class="modal-content">&ndash;&gt;-->
+<!--&lt;!&ndash;    <span class="close-btn">&times;</span>&ndash;&gt;-->
+<!--&lt;!&ndash;    <h2>請填寫領養表單</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;    <form id="adoptForm">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="hidden" id="petId" name="petId">&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="text" id="name" name="name" placeholder="姓名" required>&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="email" id="email" name="email" placeholder="Email" required>&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="text" id="phone" name="phone" placeholder="聯絡電話" required>&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="text" id="address" name="address" placeholder="居住地區" required>&ndash;&gt;-->
+<!--&lt;!&ndash;      <textarea id="experience" name="experience" placeholder="照顧經驗" rows="2"></textarea>&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="text" id="identityNumber" name="identityNumber" placeholder="身分證字號" required>&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="date" id="birthday" name="birthday" required>&ndash;&gt;-->
+<!--&lt;!&ndash;      <input type="text" id="job" name="job" placeholder="職業">&ndash;&gt;-->
+<!--&lt;!&ndash;      <select id="householdType" name="householdType">&ndash;&gt;-->
+<!--&lt;!&ndash;        <option value="">居住類型</option>&ndash;&gt;-->
+<!--&lt;!&ndash;        <option value="透天">透天</option>&ndash;&gt;-->
+<!--&lt;!&ndash;        <option value="公寓">公寓</option>&ndash;&gt;-->
+<!--&lt;!&ndash;        <option value="大樓">大樓</option>&ndash;&gt;-->
+<!--&lt;!&ndash;      </select>&ndash;&gt;-->
+<!--&lt;!&ndash;      <div style="display: flex; justify-content: center; margin: 1rem 0;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <label style="display: flex; align-items: center; gap: 8px; white-space: nowrap;">&ndash;&gt;-->
+<!--&lt;!&ndash;          <input type="checkbox" id="hasOtherPets" name="hasOtherPets">&ndash;&gt;-->
+<!--&lt;!&ndash;          家中是否已有其他寵物&ndash;&gt;-->
+<!--&lt;!&ndash;        </label>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      <textarea id="reason" name="reason" placeholder="為什麼想領養這隻動物？" rows="2"></textarea>&ndash;&gt;-->
+<!--&lt;!&ndash;      <div style="display: flex; justify-content: center; margin: 1rem 0;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <label style="display: flex; align-items: center; gap: 8px; white-space: nowrap;">&ndash;&gt;-->
+<!--&lt;!&ndash;          <input type="checkbox" id="commitment" name="commitment" required>&ndash;&gt;-->
+<!--&lt;!&ndash;          我承諾會善待並照顧牠&ndash;&gt;-->
+<!--&lt;!&ndash;        </label>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      <button type="submit" style="margin-top: 1rem; padding: 0.5rem 1.5rem; background-color: rgb(46, 61, 102); color: white; border: none; border-radius: 30px; cursor: pointer;">&ndash;&gt;-->
+<!--&lt;!&ndash;        送出申請&ndash;&gt;-->
+<!--&lt;!&ndash;      </button>&ndash;&gt;-->
+<!--&lt;!&ndash;    </form>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<script>&ndash;&gt;-->
+<!--&lt;!&ndash;  // dropdown 菜單互動&ndash;&gt;-->
+<!--&lt;!&ndash;  let hideTimeout;&ndash;&gt;-->
+<!--&lt;!&ndash;  const dropdown = document.querySelector(".dropdown");&ndash;&gt;-->
+<!--&lt;!&ndash;  const menu = dropdown.querySelector(".dropdown-menu");&ndash;&gt;-->
+<!--&lt;!&ndash;  dropdown.addEventListener("mouseenter", () => {&ndash;&gt;-->
+<!--&lt;!&ndash;    clearTimeout(hideTimeout);&ndash;&gt;-->
+<!--&lt;!&ndash;    menu.style.display = "block";&ndash;&gt;-->
+<!--&lt;!&ndash;  });&ndash;&gt;-->
+<!--&lt;!&ndash;  dropdown.addEventListener("mouseleave", () => {&ndash;&gt;-->
+<!--&lt;!&ndash;    hideTimeout = setTimeout(() => {&ndash;&gt;-->
+<!--&lt;!&ndash;      menu.style.display = "none";&ndash;&gt;-->
+<!--&lt;!&ndash;    }, 300);&ndash;&gt;-->
+<!--&lt;!&ndash;  });&ndash;&gt;-->
+
+<!--&lt;!&ndash;  // 深色模式&ndash;&gt;-->
+<!--&lt;!&ndash;  document.addEventListener("DOMContentLoaded", () => {&ndash;&gt;-->
+<!--&lt;!&ndash;    const toggleBtn = document.getElementById("darkModeToggle");&ndash;&gt;-->
+<!--&lt;!&ndash;    function updateIcon(isDark) {&ndash;&gt;-->
+<!--&lt;!&ndash;      toggleBtn.textContent = isDark ? "☀️" : "🌙";&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+<!--&lt;!&ndash;    const stored = localStorage.getItem("darkMode");&ndash;&gt;-->
+<!--&lt;!&ndash;    const isDarkMode = stored === "true";&ndash;&gt;-->
+<!--&lt;!&ndash;    if (isDarkMode) {&ndash;&gt;-->
+<!--&lt;!&ndash;      document.body.classList.add("dark-mode");&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+<!--&lt;!&ndash;    updateIcon(isDarkMode);&ndash;&gt;-->
+<!--&lt;!&ndash;    toggleBtn.addEventListener("click", () => {&ndash;&gt;-->
+<!--&lt;!&ndash;      const isDark = document.body.classList.toggle("dark-mode");&ndash;&gt;-->
+<!--&lt;!&ndash;      localStorage.setItem("darkMode", isDark ? "true" : "false");&ndash;&gt;-->
+<!--&lt;!&ndash;      updateIcon(isDark);&ndash;&gt;-->
+<!--&lt;!&ndash;    });&ndash;&gt;-->
+
+<!--&lt;!&ndash;    // 主要：載入所有寵物&ndash;&gt;-->
+<!--&lt;!&ndash;    fetch("/api/animals")&ndash;&gt;-->
+<!--&lt;!&ndash;            .then(res => res.json())&ndash;&gt;-->
+<!--&lt;!&ndash;            .then(data => {&ndash;&gt;-->
+<!--&lt;!&ndash;              const container = document.getElementById("petContainer");&ndash;&gt;-->
+<!--&lt;!&ndash;              container.innerHTML = "";&ndash;&gt;-->
+<!--&lt;!&ndash;              data.forEach(pet => {&ndash;&gt;-->
+<!--&lt;!&ndash;                const card = document.createElement("div");&ndash;&gt;-->
+<!--&lt;!&ndash;                card.className = "pet-card";&ndash;&gt;-->
+<!--&lt;!&ndash;                card.innerHTML = `&ndash;&gt;-->
+<!--&lt;!&ndash;            <img src="${pet.image ? pet.image : 'uploads/images/default.png'}" alt="${pet.name}" />&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="pet-info">&ndash;&gt;-->
+<!--&lt;!&ndash;              <h3>${pet.name}</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;              <p>年齡：${pet.age} 歲</p>&ndash;&gt;-->
+<!--&lt;!&ndash;              <p>${pet.description || ''}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;              <button class="adopt-btn" data-pet-id="${pet.id}">我要領養</button>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          `;&ndash;&gt;-->
+<!--&lt;!&ndash;                container.appendChild(card);&ndash;&gt;-->
+<!--&lt;!&ndash;              });&ndash;&gt;-->
+
+<!--&lt;!&ndash;              // 綁定每個「我要領養」按鈕點擊事件&ndash;&gt;-->
+<!--&lt;!&ndash;              document.querySelectorAll(".adopt-btn").forEach(btn => {&ndash;&gt;-->
+<!--&lt;!&ndash;                btn.addEventListener("click", e => {&ndash;&gt;-->
+<!--&lt;!&ndash;                  const petId = btn.getAttribute("data-pet-id");&ndash;&gt;-->
+<!--&lt;!&ndash;                  // 取得這隻寵物資料&ndash;&gt;-->
+<!--&lt;!&ndash;                  const pet = data.find(p => p.id == petId);&ndash;&gt;-->
+<!--&lt;!&ndash;                  // 填充詳細 modal&ndash;&gt;-->
+<!--&lt;!&ndash;                  document.getElementById("animalDetail").innerHTML = `&ndash;&gt;-->
+<!--&lt;!&ndash;                  <div style="display:flex;flex-direction:column;align-items:center;">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <img src="${pet.image ? pet.image : 'uploads/images/default.png'}"&ndash;&gt;-->
+<!--&lt;!&ndash;                         alt="${pet.name}"&ndash;&gt;-->
+<!--&lt;!&ndash;                         style="width:220px;height:220px;object-fit:cover;border-radius:12px;box-shadow:0 2px 10px #bbb;margin-bottom:1rem;">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <h3 style="margin:0 0 0.5rem;">${pet.name}</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <table style="width:100%;max-width:350px;border-collapse:collapse;">&ndash;&gt;-->
+<!--&lt;!&ndash;                      <tr><td><strong>年齡</strong></td><td>${pet.age} 歲</td></tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <tr><td><strong>性別</strong></td><td>${pet.gender || "未填寫"}</td></tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <tr><td><strong>品種</strong></td><td>${pet.breed || "未填寫"}</td></tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <tr><td><strong>體型</strong></td><td>${pet.size || "未填寫"}</td></tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <tr><td><strong>健康狀況</strong></td><td>${pet.health || "未填寫"}</td></tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <tr><td><strong>已施打疫苗</strong></td><td>${pet.vaccinated ? "是" : "否"}</td></tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <tr><td><strong>已結紮</strong></td><td>${pet.neutered ? "是" : "否"}</td></tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div style="margin-top:1rem;width:100%;max-width:350px;text-align:left;">&ndash;&gt;-->
+<!--&lt;!&ndash;                      <strong>其他說明：</strong>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <div style="margin-top:0.3rem;">${pet.description || "無"}</div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                `;&ndash;&gt;-->
+<!--&lt;!&ndash;                  document.getElementById("petId").value = pet.id;&ndash;&gt;-->
+<!--&lt;!&ndash;                  document.getElementById("adoptModal").style.display = "block";&ndash;&gt;-->
+<!--&lt;!&ndash;                });&ndash;&gt;-->
+<!--&lt;!&ndash;              });&ndash;&gt;-->
+<!--&lt;!&ndash;            })&ndash;&gt;-->
+<!--&lt;!&ndash;            .catch(err => {&ndash;&gt;-->
+<!--&lt;!&ndash;              document.getElementById("petContainer").innerHTML = "<p>載入寵物資料失敗</p>";&ndash;&gt;-->
+<!--&lt;!&ndash;            });&ndash;&gt;-->
+<!--&lt;!&ndash;  });&ndash;&gt;-->
+
+<!--&lt;!&ndash;  // Modal 關閉&ndash;&gt;-->
+<!--&lt;!&ndash;  document.querySelectorAll(".close-btn").forEach(btn => {&ndash;&gt;-->
+<!--&lt;!&ndash;    btn.onclick = () => {&ndash;&gt;-->
+<!--&lt;!&ndash;      btn.closest(".modal").style.display = "none";&ndash;&gt;-->
+<!--&lt;!&ndash;    };&ndash;&gt;-->
+<!--&lt;!&ndash;  });&ndash;&gt;-->
+<!--&lt;!&ndash;  window.onclick = function (event) {&ndash;&gt;-->
+<!--&lt;!&ndash;    document.querySelectorAll(".modal").forEach(m => {&ndash;&gt;-->
+<!--&lt;!&ndash;      if (event.target === m) m.style.display = "none";&ndash;&gt;-->
+<!--&lt;!&ndash;    });&ndash;&gt;-->
+<!--&lt;!&ndash;  };&ndash;&gt;-->
+
+<!--&lt;!&ndash;  // 確認領養&ndash;&gt;-->
+<!--&lt;!&ndash;  document.getElementById("confirmAdopt").addEventListener("click", () => {&ndash;&gt;-->
+<!--&lt;!&ndash;    document.getElementById("adoptModal").style.display = "none";&ndash;&gt;-->
+<!--&lt;!&ndash;    document.getElementById("formModal").style.display = "block";&ndash;&gt;-->
+<!--&lt;!&ndash;  });&ndash;&gt;-->
+
+<!--&lt;!&ndash;  // 領養表單送出&ndash;&gt;-->
+<!--&lt;!&ndash;  document.getElementById("adoptForm").addEventListener("submit", function (e) {&ndash;&gt;-->
+<!--&lt;!&ndash;    e.preventDefault();&ndash;&gt;-->
+<!--&lt;!&ndash;    const payload = {&ndash;&gt;-->
+<!--&lt;!&ndash;      petId: parseInt(document.getElementById("petId").value),&ndash;&gt;-->
+<!--&lt;!&ndash;      name: document.getElementById("name").value,&ndash;&gt;-->
+<!--&lt;!&ndash;      email: document.getElementById("email").value,&ndash;&gt;-->
+<!--&lt;!&ndash;      phone: document.getElementById("phone").value,&ndash;&gt;-->
+<!--&lt;!&ndash;      address: document.getElementById("address").value,&ndash;&gt;-->
+<!--&lt;!&ndash;      experience: document.getElementById("experience").value,&ndash;&gt;-->
+<!--&lt;!&ndash;      identityNumber: document.getElementById("identityNumber").value,&ndash;&gt;-->
+<!--&lt;!&ndash;      birthday: document.getElementById("birthday").value,&ndash;&gt;-->
+<!--&lt;!&ndash;      job: document.getElementById("job").value,&ndash;&gt;-->
+<!--&lt;!&ndash;      householdType: document.getElementById("householdType").value,&ndash;&gt;-->
+<!--&lt;!&ndash;      hasOtherPets: document.getElementById("hasOtherPets").checked,&ndash;&gt;-->
+<!--&lt;!&ndash;      reason: document.getElementById("reason").value,&ndash;&gt;-->
+<!--&lt;!&ndash;      commitment: document.getElementById("commitment").checked&ndash;&gt;-->
+<!--&lt;!&ndash;    };&ndash;&gt;-->
+<!--&lt;!&ndash;    fetch("/api/adopt", {&ndash;&gt;-->
+<!--&lt;!&ndash;      method: "POST",&ndash;&gt;-->
+<!--&lt;!&ndash;      headers: { "Content-Type": "application/json" },&ndash;&gt;-->
+<!--&lt;!&ndash;      body: JSON.stringify(payload)&ndash;&gt;-->
+<!--&lt;!&ndash;    })&ndash;&gt;-->
+<!--&lt;!&ndash;            .then(res => res.json())&ndash;&gt;-->
+<!--&lt;!&ndash;            .then(data => {&ndash;&gt;-->
+<!--&lt;!&ndash;              alert(data.message || "已送出領養申請！");&ndash;&gt;-->
+<!--&lt;!&ndash;              document.getElementById("formModal").style.display = "none";&ndash;&gt;-->
+<!--&lt;!&ndash;            })&ndash;&gt;-->
+<!--&lt;!&ndash;            .catch(err => {&ndash;&gt;-->
+<!--&lt;!&ndash;              alert("送出失敗，請稍後再試");&ndash;&gt;-->
+<!--&lt;!&ndash;            });&ndash;&gt;-->
+<!--&lt;!&ndash;  });&ndash;&gt;-->
+<!--&lt;!&ndash;</script>&ndash;&gt;-->
+<!--&lt;!&ndash;</body>&ndash;&gt;-->
+<!--&lt;!&ndash;</html>&ndash;&gt;-->
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="zh-Hant">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8" />-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>-->
+<!--  <title>爪印物語-寵物領養</title>-->
+<!--  <style>-->
+<!--    body {-->
+<!--      margin: 0;-->
+<!--      font-family: 'Segoe UI', sans-serif;-->
+<!--      background-color: #f8f9fa;-->
+<!--    }-->
+
+<!--    header {-->
+<!--      display: flex;-->
+<!--      justify-content: space-between;-->
+<!--      align-items: center;-->
+<!--      background-color: rgba(91, 108, 156, 0.8);-->
+<!--      padding: 20px 60px;-->
+<!--      color: white;-->
+<!--    }-->
+
+<!--    .logo a {-->
+<!--      font-size: 1em;-->
+<!--      font-weight: normal;-->
+<!--      color: white;-->
+<!--      text-decoration: none;-->
+<!--      padding: 0;-->
+<!--      margin: 0;-->
+<!--      box-shadow: none;-->
+<!--    }-->
+
+<!--    .logo a:visited,-->
+<!--    .logo a:hover,-->
+<!--    .logo a:active,-->
+<!--    .logo a:focus {-->
+<!--      color: white;-->
+<!--      text-decoration: none;-->
+<!--    }-->
+
+<!--    header h1 {-->
+<!--      margin: 0;-->
+<!--      font-size: 2.5rem;-->
+<!--      color:black;-->
+<!--    }-->
+
+<!--    .pet-container {-->
+<!--      display: grid;-->
+<!--      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));-->
+<!--      gap: 20px;-->
+<!--      padding: 2rem;-->
+<!--      max-width: 1200px;-->
+<!--      margin: auto;-->
+<!--    }-->
+
+<!--    .pet-card {-->
+<!--      background: white;-->
+<!--      border-radius: 20px;-->
+<!--      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);-->
+<!--      overflow: hidden;-->
+<!--      transition: transform 0.3s;-->
+<!--    }-->
+
+<!--    .pet-card:hover {-->
+<!--      transform: translateY(-5px);-->
+<!--    }-->
+
+<!--    .pet-card img {-->
+<!--      width: 100%;-->
+<!--      height: 200px;-->
+<!--      object-fit: cover;-->
+<!--    }-->
+
+<!--    .pet-info {-->
+<!--      padding: 1rem;-->
+<!--    }-->
+
+<!--    .pet-info h3 {-->
+<!--      margin: 0 0 0.5rem;-->
+<!--    }-->
+
+<!--    .pet-info p {-->
+<!--      margin: 0.25rem 0;-->
+<!--      color: #555;-->
+<!--    }-->
+
+<!--    .adopt-btn {-->
+<!--      display: inline-block;-->
+<!--      margin-top: 1rem;-->
+<!--      padding: 0.5rem 1.5rem;-->
+<!--      background-color:  rgb(46, 61, 102);-->
+<!--      color: white;-->
+<!--      border: none;-->
+<!--      border-radius: 30px;-->
+<!--      cursor: pointer;-->
+<!--      transition: background-color 0.3s;-->
+<!--    }-->
+
+<!--    .adopt-btn:hover {-->
+<!--      background-color: rgb(46, 61, 102);-->
+<!--    }-->
+
+<!--    @media (max-width: 600px) {-->
+<!--      header h1 {-->
+<!--        font-size: 2rem;-->
+<!--      }-->
+<!--    }-->
+<!--    .navbar {-->
+<!--      background-color: rgba(91, 108, 156, 0.8);-->
+<!--      display: flex;-->
+<!--      justify-content: space-between;-->
+<!--      align-items: center;-->
+<!--      padding: 20px 60px;-->
+<!--    }-->
+
+<!--    .nav-links {-->
+<!--      display: flex;-->
+<!--      gap: 20px;-->
+<!--      align-items: center;-->
+<!--    }-->
+
+<!--    .nav-links a {-->
+<!--      color: white;-->
+<!--      text-decoration: none;-->
+<!--      font-weight: 500;-->
+<!--    }-->
+
+<!--    .nav-links .login {-->
+<!--      font-weight: bold;-->
+<!--    }-->
+
+<!--    .navbar .logo {-->
+<!--      font-size: 1em;-->
+<!--      font-weight: 500;-->
+<!--    }-->
+
+<!--    .navbar .logo a {-->
+<!--      color: white;-->
+<!--      text-decoration: none;-->
+<!--      border: none;-->
+<!--      font-weight: 500;-->
+<!--      font-size: 1em;-->
+<!--    }-->
+
+<!--    .navbar nav a {-->
+<!--      margin-left: 20px;-->
+<!--      text-decoration: none;-->
+<!--      color: white;-->
+<!--      font-weight: 500;-->
+<!--    }-->
+<!--    .nav-right {-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--      gap: 20px;-->
+<!--    }-->
+<!--    .nav-right a {-->
+<!--      color: white;-->
+<!--      text-decoration: none;-->
+<!--      font-weight: 500;-->
+<!--    }-->
+
+<!--    .navbar .login {-->
+<!--      font-weight: bold;-->
+<!--    }-->
+<!--    .logo,-->
+<!--    .logo a,-->
+<!--    nav a,-->
+<!--    .hero h1,-->
+<!--    .hero h2 {-->
+<!--      user-select: none;-->
+<!--    }-->
+
+<!--    .dropdown {-->
+<!--      position: relative;-->
+<!--    }-->
+
+<!--    .dropdown-menu {-->
+<!--      display: none;-->
+<!--      position: absolute;-->
+<!--      top: 30px;-->
+<!--      background-color: rgba(255, 255, 255, 0.95);-->
+<!--      border-radius: 8px;-->
+<!--      padding: 10px;-->
+<!--      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);-->
+<!--      z-index: 100;-->
+<!--      min-width: 160px;-->
+<!--      right: 0;-->
+<!--    }-->
+
+<!--    .dropdown-menu button {-->
+<!--      background: none;-->
+<!--      border: none;-->
+<!--      padding: 8px 12px;-->
+<!--      text-align: left;-->
+<!--      width: 100%;-->
+<!--      font-size: 14px;-->
+<!--      color: #333;-->
+<!--      cursor: pointer;-->
+<!--    }-->
+
+<!--    .dropdown-menu button:hover {-->
+<!--      background-color: #f0f0f0;-->
+<!--    }-->
+
+<!--    .dropdown:hover .dropdown-menu {-->
+<!--      display: block;-->
+<!--    }-->
+<!--    .dropdown-menu.show {-->
+<!--      display: block;-->
+<!--    }-->
+
+<!--    .header {-->
+<!--      display: flex;-->
+<!--      justify-content: space-between;-->
+<!--      align-items: center;-->
+<!--      padding: 25px 60px;-->
+<!--      background-color: rgba(91, 108, 156, 0.8);-->
+<!--      color: white;-->
+<!--    }-->
+
+<!--    .nav {-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--      gap: 20px;-->
+<!--    }-->
+
+<!--    .nav a {-->
+<!--      color: white;-->
+<!--      text-decoration: none;-->
+<!--    }-->
+<!--    body.dark-mode::before {-->
+<!--      content: "";-->
+<!--      position: fixed;-->
+<!--      top: 0;-->
+<!--      left: 0;-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      background-color: rgba(0, 0, 0, 0.4);-->
+<!--      z-index: -1;-->
+<!--    }-->
+
+<!--    body.dark-mode main {-->
+<!--      background: #2a2a2a;-->
+<!--      color: #eee;-->
+<!--    }-->
+
+<!--    body.dark-mode .navbar,-->
+<!--    body.dark-mode .header {-->
+<!--      background-color: rgba(40, 40, 60, 0.8);-->
+<!--    }-->
+
+<!--    body.dark-mode .navbar .logo,-->
+<!--    body.dark-mode .navbar .nav-right a,-->
+<!--    body.dark-mode .navbar .login {-->
+<!--      color: #eee;-->
+<!--    }-->
+
+<!--    body.dark-mode .dropdown-menu {-->
+<!--      background-color: rgba(50, 50, 50, 0.95);-->
+<!--    }-->
+
+<!--    body.dark-mode .dropdown-menu button {-->
+<!--      color: #eee;-->
+<!--    }-->
+
+<!--    body.dark-mode .dropdown-menu button:hover {-->
+<!--      background-color: #444;-->
+<!--    }-->
+
+<!--    body.dark-mode .quote {-->
+<!--      background-color: rgba(60, 60, 60, 0.8);-->
+<!--      color: #eee;-->
+<!--    }-->
+
+<!--    body.dark-mode .subscribe {-->
+<!--      background-color: #222;-->
+<!--      color: #ddd;-->
+<!--    }-->
+
+<!--    body.dark-mode .subscribe input[type="email"] {-->
+<!--      background-color: #444;-->
+<!--      color: #eee;-->
+<!--      border: 1px solid #666;-->
+<!--    }-->
+
+<!--    body.dark-mode .search-box {-->
+<!--      background-color: #444;-->
+<!--      color: #eee;-->
+<!--      border: 1px solid #666;-->
+<!--    }-->
+
+<!--    body.dark-mode .action-btn {-->
+<!--      background-color: #333;-->
+<!--      color: #eee;-->
+<!--    }-->
+
+<!--    body.dark-mode .primary-btn {-->
+<!--      background-color: #4a6a40;-->
+<!--    }-->
+<!--    #darkModeToggle:hover {-->
+<!--      opacity: 0.8;-->
+<!--    }-->
+<!--    .header-title {-->
+<!--      text-align: center;-->
+<!--      padding: 1.5rem 0;-->
+<!--      color: black;-->
+<!--    }-->
+
+<!--    .header-title h1 {-->
+<!--      font-size: 2.2rem;-->
+<!--      margin-bottom: 0.5rem;-->
+<!--    }-->
+
+<!--    .header-title p {-->
+<!--      font-size: 1.1rem;-->
+<!--      color: black;-->
+<!--    }-->
+
+<!--    /* Modal */-->
+<!--    .modal {-->
+<!--      display: none;-->
+<!--      position: fixed;-->
+<!--      z-index: 999;-->
+<!--      left: 0;-->
+<!--      top: 0;-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      overflow: auto;-->
+<!--      background-color: rgba(0, 0, 0, 0.6);-->
+<!--    }-->
+
+<!--    .modal-content {-->
+<!--      background-color: #fff;-->
+<!--      margin: 4% auto;-->
+<!--      padding: 20px;-->
+<!--      border-radius: 12px;-->
+<!--      width: 90%;-->
+<!--      max-width: 500px;-->
+<!--      text-align: center;-->
+<!--      position: relative;-->
+<!--      box-shadow: 0 4px 24px rgba(0,0,0,0.18);-->
+<!--    }-->
+
+<!--    .close-btn {-->
+<!--      position: absolute;-->
+<!--      top: 10px;-->
+<!--      right: 15px;-->
+<!--      font-size: 24px;-->
+<!--      font-weight: bold;-->
+<!--      color: #888;-->
+<!--      cursor: pointer;-->
+<!--    }-->
+
+<!--    #confirmAdopt {-->
+<!--      margin-top: 20px;-->
+<!--      padding: 0.5rem 1.5rem;-->
+<!--      background-color: rgb(46, 61, 102);-->
+<!--      color: white;-->
+<!--      border: none;-->
+<!--      border-radius: 30px;-->
+<!--      cursor: pointer;-->
+<!--    }-->
+
+<!--    .modal-content input,-->
+<!--    .modal-content textarea,-->
+<!--    .modal-content select {-->
+<!--      width: 100%;-->
+<!--      padding: 0.5rem;-->
+<!--      margin-top: 0.3rem;-->
+<!--      border: 1px solid #ccc;-->
+<!--      border-radius: 6px;-->
+<!--      box-sizing: border-box;-->
+<!--    }-->
+<!--    .modal-content label {-->
+<!--      display: block;-->
+<!--      text-align: left;-->
+<!--      margin: 0.5rem 0 0.2rem;-->
+<!--    }-->
+<!--    .modal-content button[type="submit"] {-->
+<!--      margin-top: 1rem;-->
+<!--      padding: 0.5rem 1.5rem;-->
+<!--      background-color: rgb(46, 61, 102);-->
+<!--      color: white;-->
+<!--      border: none;-->
+<!--      border-radius: 30px;-->
+<!--      cursor: pointer;-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<header>-->
+<!--  <div class="navbar">-->
+<!--    <div class="logo">-->
+<!--      <a href="index.html">The Pet Forum</a>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <nav class="nav-right">-->
+<!--    <div class="dropdown">-->
+<!--      <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">論壇</a>-->
+<!--      <div class="dropdown-menu">-->
+<!--        <button onclick="location.href='forum.html'">主論壇</button>-->
+<!--        <button onclick="location.href='adoption.html'">領養專區</button>-->
+<!--        <button onclick="location.href='qa.html'">Q&A</button>-->
+<!--        <button id="darkModeToggle" title="切換深色模式" style="background: none; border: none; font-size: 20px; cursor: pointer;">🌙</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <a href="#">相關</a>-->
+<!--    <a href="#">會員</a>-->
+<!--    <a href="login.html" class="login">登入 / 註冊</a>-->
+<!--  </nav>-->
+<!--</header>-->
+
+<!--&lt;!&ndash; 額外文字區塊 &ndash;&gt;-->
+<!--<div class="header-title">-->
+<!--  <h1>🐾 寵物領養</h1>-->
+<!--  <p>找到屬於你的毛小孩吧！</p>-->
+<!--</div>-->
+<!--<section id="petContainer" class="pet-container">-->
+<!--  &lt;!&ndash; 寵物卡片由 JS 動態產生 &ndash;&gt;-->
+<!--</section>-->
+
+<!--&lt;!&ndash; 動物詳細資料 Modal &ndash;&gt;-->
+<!--<div id="adoptModal" class="modal">-->
+<!--  <div class="modal-content">-->
+<!--    <span class="close-btn">&times;</span>-->
+<!--    <h2>動物詳細資料</h2>-->
+<!--    <div id="animalDetail">-->
+
+<!--    </div>-->
+<!--    <button id="confirmAdopt">確認領養</button>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; 領養表單 Modal &ndash;&gt;-->
+<!--<div id="formModal" class="modal">-->
+<!--  <div class="modal-content">-->
+<!--    <span class="close-btn">&times;</span>-->
+<!--    <h2>請填寫領養表單</h2>-->
+<!--    <form id="adoptForm">-->
+<!--      <input type="hidden" id="petId" name="petId">-->
+<!--      <label for="name">姓名</label>-->
+<!--      <input type="text" id="name" name="name" required>-->
+<!--      <label for="email">Email</label>-->
+<!--      <input type="email" id="email" name="email" required>-->
+<!--      <label for="phone">聯絡電話</label>-->
+<!--      <input type="text" id="phone" name="phone" required>-->
+<!--      <label for="address">居住地區</label>-->
+<!--      <input type="text" id="address" name="address" required>-->
+<!--      <label for="experience">照顧經驗</label>-->
+<!--      <textarea id="experience" name="experience" rows="2"></textarea>-->
+<!--      <label for="identityNumber">身分證字號</label>-->
+<!--      <input type="text" id="identityNumber" name="identityNumber" required>-->
+<!--      <label for="birthday">生日</label>-->
+<!--      <input type="date" id="birthday" name="birthday" required>-->
+<!--      <label for="job">職業</label>-->
+<!--      <input type="text" id="job" name="job">-->
+<!--      <label for="householdType">居住類型</label>-->
+<!--      <select id="householdType" name="householdType">-->
+<!--        <option value="">請選擇</option>-->
+<!--        <option value="透天">透天</option>-->
+<!--        <option value="公寓">公寓</option>-->
+<!--        <option value="大樓">大樓</option>-->
+<!--      </select>-->
+<!--      <div style="display: flex; justify-content: center; margin: 1rem 0;">-->
+<!--        <label style="display: flex; align-items: center; gap: 8px; white-space: nowrap;">-->
+<!--          <input type="checkbox" id="hasOtherPets" name="hasOtherPets">-->
+<!--          家中是否已有其他寵物-->
+<!--        </label>-->
+<!--      </div>-->
+<!--      <label for="reason">為什麼想領養這隻動物？</label>-->
+<!--      <textarea id="reason" name="reason" rows="2"></textarea>-->
+<!--      <div style="display: flex; justify-content: center; margin: 1rem 0;">-->
+<!--        <label style="display: flex; align-items: center; gap: 8px; white-space: nowrap;">-->
+<!--          <input type="checkbox" id="commitment" name="commitment" required>-->
+<!--          我承諾會善待並照顧牠-->
+<!--        </label>-->
+<!--      </div>-->
+<!--      <button type="submit">-->
+<!--        送出申請-->
+<!--      </button>-->
+<!--    </form>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--  // dropdown 菜單互動-->
+<!--  let hideTimeout;-->
+<!--  const dropdown = document.querySelector(".dropdown");-->
+<!--  const menu = dropdown.querySelector(".dropdown-menu");-->
+<!--  dropdown.addEventListener("mouseenter", () => {-->
+<!--    clearTimeout(hideTimeout);-->
+<!--    menu.style.display = "block";-->
+<!--  });-->
+<!--  dropdown.addEventListener("mouseleave", () => {-->
+<!--    hideTimeout = setTimeout(() => {-->
+<!--      menu.style.display = "none";-->
+<!--    }, 300);-->
+<!--  });-->
+
+<!--  // 深色模式-->
+<!--  document.addEventListener("DOMContentLoaded", () => {-->
+<!--    const toggleBtn = document.getElementById("darkModeToggle");-->
+<!--    function updateIcon(isDark) {-->
+<!--      toggleBtn.textContent = isDark ? "☀️" : "🌙";-->
+<!--    }-->
+<!--    const stored = localStorage.getItem("darkMode");-->
+<!--    const isDarkMode = stored === "true";-->
+<!--    if (isDarkMode) {-->
+<!--      document.body.classList.add("dark-mode");-->
+<!--    }-->
+<!--    updateIcon(isDarkMode);-->
+<!--    toggleBtn.addEventListener("click", () => {-->
+<!--      const isDark = document.body.classList.toggle("dark-mode");-->
+<!--      localStorage.setItem("darkMode", isDark ? "true" : "false");-->
+<!--      updateIcon(isDark);-->
+<!--    });-->
+
+<!--    // 主要：載入所有寵物-->
+<!--    fetch("/api/animals")-->
+<!--            .then(res => res.json())-->
+<!--            .then(data => {-->
+<!--              const container = document.getElementById("petContainer");-->
+<!--              container.innerHTML = "";-->
+<!--              data.forEach(pet => {-->
+<!--                const card = document.createElement("div");-->
+<!--                card.className = "pet-card";-->
+<!--                card.innerHTML = `-->
+<!--            <img src="${pet.image ? pet.image : 'uploads/images/default.png'}" alt="${pet.name}" />-->
+<!--            <div class="pet-info">-->
+<!--              <h3>${pet.name}</h3>-->
+<!--              <p>年齡：${pet.age} 歲</p>-->
+<!--              <p>${pet.description || ''}</p>-->
+<!--              <button class="adopt-btn" data-pet-id="${pet.id}">我要領養</button>-->
+<!--            </div>-->
+<!--          `;-->
+<!--                container.appendChild(card);-->
+<!--              });-->
+
+<!--              // 綁定每個「我要領養」按鈕點擊事件-->
+<!--              document.querySelectorAll(".adopt-btn").forEach(btn => {-->
+<!--                btn.addEventListener("click", e => {-->
+<!--                  const petId = btn.getAttribute("data-pet-id");-->
+<!--                  // 取得這隻寵物資料-->
+<!--                  const pet = data.find(p => p.id == petId);-->
+<!--                  // 填充詳細 modal-->
+<!--                  document.getElementById("animalDetail").innerHTML = `-->
+<!--              <div style="display:flex;flex-direction:column;align-items:center;">-->
+<!--                <img src="${pet.image ? pet.image : 'uploads/images/default.png'}"-->
+<!--                     alt="${pet.name}"-->
+<!--                     style="width:220px;height:220px;object-fit:cover;border-radius:12px;box-shadow:0 2px 10px #bbb;margin-bottom:1rem;">-->
+<!--                <h3 style="margin:0 0 0.5rem;">${pet.name}</h3>-->
+<!--                <table style="width:100%;max-width:350px;border-collapse:collapse;">-->
+<!--                  <tr><td><strong>年齡</strong></td><td>${pet.age} 歲</td></tr>-->
+<!--                  <tr><td><strong>性別</strong></td><td>${pet.gender || "未填寫"}</td></tr>-->
+<!--                  <tr><td><strong>品種</strong></td><td>${pet.breed || "未填寫"}</td></tr>-->
+<!--                  <tr><td><strong>體型</strong></td><td>${pet.size || "未填寫"}</td></tr>-->
+<!--                  <tr><td><strong>健康狀況</strong></td><td>${pet.health || "未填寫"}</td></tr>-->
+<!--                  <tr><td><strong>已施打疫苗</strong></td><td>${pet.vaccinated ? "是" : "否"}</td></tr>-->
+<!--                  <tr><td><strong>已結紮</strong></td><td>${pet.neutered ? "是" : "否"}</td></tr>-->
+<!--                </table>-->
+<!--                <div style="margin-top:1rem;width:100%;max-width:350px;text-align:left;">-->
+<!--                  <strong>其他說明：</strong>-->
+<!--                  <div style="margin-top:0.3rem;">${pet.description || "無"}</div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            `;-->
+<!--                  document.getElementById("petId").value = pet.id;-->
+<!--                  document.getElementById("adoptModal").style.display = "block";-->
+<!--                });-->
+<!--              });-->
+<!--            })-->
+<!--            .catch(err => {-->
+<!--              document.getElementById("petContainer").innerHTML = "<p>載入寵物資料失敗</p>";-->
+<!--            });-->
+<!--  });-->
+
+<!--  // Modal 關閉-->
+<!--  document.querySelectorAll(".close-btn").forEach(btn => {-->
+<!--    btn.onclick = () => {-->
+<!--      btn.closest(".modal").style.display = "none";-->
+<!--    };-->
+<!--  });-->
+<!--  window.onclick = function (event) {-->
+<!--    document.querySelectorAll(".modal").forEach(m => {-->
+<!--      if (event.target === m) m.style.display = "none";-->
+<!--    });-->
+<!--  };-->
+
+<!--  // 確認領養-->
+<!--  document.getElementById("confirmAdopt").addEventListener("click", () => {-->
+<!--    document.getElementById("adoptModal").style.display = "none";-->
+<!--    document.getElementById("formModal").style.display = "block";-->
+<!--  });-->
+
+<!--  // 領養表單送出-->
+<!--  document.getElementById("adoptForm").addEventListener("submit", function (e) {-->
+<!--    e.preventDefault();-->
+<!--    const payload = {-->
+<!--      petId: parseInt(document.getElementById("petId").value),-->
+<!--      name: document.getElementById("name").value,-->
+<!--      email: document.getElementById("email").value,-->
+<!--      phone: document.getElementById("phone").value,-->
+<!--      address: document.getElementById("address").value,-->
+<!--      experience: document.getElementById("experience").value,-->
+<!--      identityNumber: document.getElementById("identityNumber").value,-->
+<!--      birthday: document.getElementById("birthday").value,-->
+<!--      job: document.getElementById("job").value,-->
+<!--      householdType: document.getElementById("householdType").value,-->
+<!--      hasOtherPets: document.getElementById("hasOtherPets").checked,-->
+<!--      reason: document.getElementById("reason").value,-->
+<!--      commitment: document.getElementById("commitment").checked-->
+<!--    };-->
+<!--    fetch("/api/adopt", {-->
+<!--      method: "POST",-->
+<!--      headers: { "Content-Type": "application/json" },-->
+<!--      body: JSON.stringify(payload)-->
+<!--    })-->
+<!--            .then(res => res.json())-->
+<!--            .then(data => {-->
+<!--              alert(data.message || "已送出領養申請！");-->
+<!--              document.getElementById("formModal").style.display = "none";-->
+<!--            })-->
+<!--            .catch(err => {-->
+<!--              alert("送出失敗，請稍後再試");-->
+<!--            });-->
+<!--  });-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>爪印物語-忘記密碼</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: url('image/555.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: rgba(91, 108, 156, 0.8);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .logo a {
+      color: white;             /* 原本的顏色 */
+      text-decoration: none;    /* 移除底線 */
+    }
+
+    .logo a:visited,
+    .logo a:hover,
+    .logo a:active,
+    .logo a:focus {
+      color: white;             /* 維持白色 */
+      text-decoration: none;    /* 確保所有狀態都沒底線 */
+    }
+
+    nav a {
+      margin-left: 1.5rem;
+      color: white;
+      text-decoration: none;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .reset-section {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 2.5rem;
+      width: 420px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .reset-section h2 {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      margin-top: 1.5rem;
+      background-color: #414560;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .back-link {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .back-link a {
+      color: #555;
+      text-decoration: none;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+
+    .toggle-password {
+      float: right;
+      margin-top: 5px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: #555;
+    }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><a href="index.html">The Pet Forum</a></div>
+  <nav>
+    <a href="index.html">論壇</a>
+    <a href="QAindex.html">毛孩大考驗</a>
+    <a href="adopt.html">領養</a>
+    <a onclick="history.back()">返回前頁</a>
+  </nav>
+</header>
+
+<main>
+  <section class="reset-section">
+    <form id="resetForm">
+      <label for="email">電子郵件</label>
+      <input type="email" id="email" required>
+
+      <label for="idNumber">身分證字號</label>
+      <input type="text" id="idNumber" required>
+
+      <label for="newPassword">新密碼</label>
+      <div class="password-container">
+        <input type="password" id="newPassword" required>
+        <div class="toggle-password" onclick="togglePassword('newPassword')">
+          <i id="icon-newPassword" class="fas fa-eye"></i>
+          <span id="label-newPassword">顯示密碼</span>
+        </div>
+      </div>
+
+      <label for="confirmPassword">再次輸入密碼</label>
+      <div class="password-container">
+        <input type="password" id="confirmPassword" required>
+        <div class="toggle-password" onclick="togglePassword('confirmPassword')">
+          <i id="icon-confirmPassword" class="fas fa-eye"></i>
+          <span id="label-confirmPassword">顯示密碼</span>
+        </div>
+      </div>
+
+
+      <button type="submit">送出</button>
+    </form>
+
+
+  </section>
+</main>
+
+<script>
+  document.getElementById("resetForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const idNumber = document.getElementById("idNumber").value.trim();
+    const newPassword = document.getElementById("newPassword").value.trim();
+    const confirm = document.getElementById("confirmPassword").value.trim();
+
+    // ✅ 檢查所有欄位是否填寫
+    if (!email || !idNumber || !newPassword || !confirm) {
+      alert("請填寫所有欄位！");
+      return;
+    }
+
+    // ✅ 檢查兩次密碼是否一致
+    if (newPassword !== confirm) {
+      alert("兩次輸入的密碼不一致！");
+      return;
+    }
+
+    const data = {
+      email: email,
+      idNumber: idNumber,
+      newPassword: newPassword
+    };
+
+    fetch("/api/auth/reset-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    })
+            .then(async response => {
+              if (response.ok) {
+                alert("密碼重設成功，請重新登入。");
+                window.location.href = "/login.html";
+              } else {
+                const contentType = response.headers.get("Content-Type");
+                if (contentType && contentType.includes("application/json")) {
+                  const err = await response.json();
+                  if (err.message.includes("email")) {
+                    alert("電子郵件輸入有誤，請確認後再試一次。");
+                  } else if (err.message.includes("idNumber")) {
+                    alert("身分證字號輸入有誤，請確認後再試一次。");
+                  } else {
+                    alert("資料有誤，請確認電子郵件與身分證是否正確。");
+                  }
+                } else {
+                  const errText = await response.text();
+                  alert(errText);  // 直接 alert 後端回傳的純文字錯誤
+                }
+              }
+            })
+            .catch(error => {
+              console.error("密碼重設錯誤：", error);
+              alert("系統發生錯誤，請稍後再試。");
+            });
+
+  });
+
+
+  function togglePassword(id) {
+    const input = document.getElementById(id);
+    const icon = document.getElementById(`icon-${id}`);
+
+    if (input.type === "password") {
+      input.type = "text";
+      icon.classList.remove("fa-eye");
+      icon.classList.add("fa-eye-slash");
+    } else {
+      input.type = "password";
+      icon.classList.remove("fa-eye-slash");
+      icon.classList.add("fa-eye");
+    }
+  }
+</script>
+</body>
+</html>

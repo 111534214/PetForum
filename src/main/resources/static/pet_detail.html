@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>爪印物語-寵物詳細資料</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    header {
+      background-color: rgb(90, 107, 152);
+      color: white;
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    /* 遮罩 */
+    .modal-backdrop {
+      position: fixed;
+      z-index: 998;
+      left: 0; top: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-backdrop.active {
+      display: flex;
+    }
+    /* 彈窗 */
+    .modal-detail-container {
+      z-index: 999;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+      max-width: 95vw;
+      max-height: 90vh;
+      overflow: auto;
+      position: relative;
+      animation: popIn 0.2s;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.92); opacity: 0;}
+      to { transform: scale(1); opacity: 1;}
+    }
+    .close-btn {
+      position: absolute;
+      right: 18px;
+      top: 14px;
+      font-size: 2rem;
+      color: #888;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 1000;
+      transition: color .2s;
+    }
+    .close-btn:hover { color: #333; }
+    /* 內容本身 */
+    .detail-container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .pet-image {
+      flex: 1 1 400px;
+    }
+    .pet-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      max-height: 500px;
+    }
+    .pet-info {
+      flex: 1 1 400px;
+      padding: 2rem;
+    }
+    .pet-info h2 {
+      margin-top: 0;
+      font-size: 2rem;
+      color: rgb(46, 61, 102);
+    }
+    .pet-info p {
+      margin: 0.5rem 0;
+      line-height: 1.5;
+    }
+    .info-list {
+      margin-top: 1rem;
+      background: #f1f1f1;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .info-list p {
+      margin: 0.5rem 0;
+    }
+    .adopt-btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.75rem 2rem;
+      background-color: rgb(46, 61, 102);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .adopt-btn:hover {
+      background-color: rgb(46, 61, 102);
+    }
+    @media (max-width: 768px) {
+      .detail-container, .modal-detail-container {
+        flex-direction: column;
+      }
+      .pet-image, .pet-info {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🐾 寵物詳細資料</h1>
+</header>
+
+<!-- 彈窗遮罩與內容 -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal-detail-container">
+    <button class="close-btn" id="closeModalBtn">&times;</button>
+    <div class="detail-container" id="modalDetail">
+      <div class="pet-image">
+        <img src="https://placekitten.com/800/600" alt="咪咪">
+      </div>
+      <div class="pet-info">
+        <h2>咪咪</h2>
+        <p><strong>年齡：</strong>2 歲</p>
+        <p><strong>性別：</strong>母</p>
+        <p><strong>品種：</strong>米克斯</p>
+        <p><strong>個性：</strong>溫柔黏人，喜歡安靜的環境</p>
+        <div class="info-list">
+          <p><strong>體型：</strong>中型</p>
+          <p><strong>健康狀況：</strong>已絕育、已施打疫苗</p>
+          <p><strong>所在地點：</strong>台中市南屯區</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 頁面上的按鈕 -->
+<div style="text-align:center; margin-top:2rem;">
+  <button class="adopt-btn" id="showModalBtn">我要領養</button>
+</div>
+
+<script>
+  // 彈窗顯示/隱藏
+  const modalBackdrop = document.getElementById('modalBackdrop');
+  document.getElementById('showModalBtn').onclick = () => {
+    modalBackdrop.classList.add('active');
+  };
+  document.getElementById('closeModalBtn').onclick = () => {
+    modalBackdrop.classList.remove('active');
+  };
+  // 按 ESC 關閉
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') modalBackdrop.classList.remove('active');
+  });
+  // 點遮罩區域關閉
+  modalBackdrop.addEventListener('click', (e) => {
+    if (e.target === modalBackdrop) modalBackdrop.classList.remove('active');
+  });
+</script>
+
+</body>
+</html>

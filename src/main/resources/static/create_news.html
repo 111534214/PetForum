@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>爪印物語-新增新聞</title>
+    <style>
+        body,
+        header {
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        /* navbar 專用 */
+        .navbar {
+            background-color: rgba(91, 108, 156, 0.8);  /* 用 0.8 版本較美觀 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            width: 100vw;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000; /* 確保在最上層 */
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5em;     /* 統一使用 em 單位 */
+            font-weight: bold;
+        }
+
+        .logo a:visited,
+        .logo a:hover,
+        .logo a:active,
+        .logo a:focus {
+            color: white;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            letter-spacing: 1px;
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-left: 20px;
+        }
+        nav a:visited,
+        nav a:hover,
+        nav a:active,
+        nav a:focus {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* profile-icon 樣式 */
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 主要內容區域（新聞表單） */
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+            margin: 0;
+            background: url('image/555.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 120px; /* 預留 navbar 高度 */
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #fff;
+            width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .header, .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .footer {
+            margin-top: 20px;
+        }
+        .user-info {
+            font-size: 14px;
+            color: #333;
+            margin-top: 10px;
+        }
+        .title-input {
+            font-size: 20px;
+            margin-top: 20px;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+        }
+        .title-input:focus {
+            outline: none;
+            border-bottom: 2px solid #666;
+        }
+        .content-input {
+            margin-top: 20px;
+            width: 100%;
+            height: 300px;
+            font-size: 14px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            resize: vertical;
+            box-sizing: border-box;
+            border-radius: 4px;
+            font-family: "Microsoft JhengHei", sans-serif;
+        }
+        .content-input:focus {
+            outline: none;
+            border-color: #666;
+        }
+        .toolbar {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .btn {
+            padding: 8px 20px;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-cancel {
+            background-color: #fff;
+            border: 1px solid #777;
+            color: #333;
+        }
+        .btn-post {
+            background-color: #275edc;
+            color: #fff;
+        }
+        #previewArea img {
+            margin-top: 5px;
+            max-width: 200px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        select {
+            padding: 6px 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<header>
+    <div class="navbar">
+        <div class="logo"><a href="index_login.html" style="color: white; text-decoration: none;">The Pet Forum</a></div>
+        <nav>
+            <a href="index_login.html">論壇</a>
+            <a href="QAindex.html">毛孩大考驗</a>
+            <a href="adopt.html">領養</a>
+            <a onclick="history.back()">返回前頁</a>
+        </nav>
+    </div>
+</header>
+<div class="container">
+    <div class="header">
+        <div>
+            <strong>新聞分類</strong>
+            <select id="newsCategory">
+                <option value="">選擇分類</option>
+                <option value="科技">科技</option>
+                <option value="健康">健康</option>
+                <option value="政策">政策</option>
+                <option value="保護">保護</option>
+                <option value="用具">用具</option>
+            </select>
+        </div>
+    </div>
+    <div class="user-info">
+        發佈身分：<span id="newsAuthor">新聞版小編</span>
+    </div>
+    <input type="text" class="title-input" id="newsTitle" placeholder="請輸入新聞標題">
+    <textarea class="content-input" id="newsContent" placeholder="在此撰寫新聞內容"></textarea>
+    <div class="toolbar">
+        <i class="fa fa-image" onclick="document.getElementById('imageUpload').click()"></i>
+        <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+        <div id="previewArea"></div>
+    </div>
+    <div class="footer">
+        <button class="btn btn-cancel" onclick="history.back()">取消</button>
+        <button class="btn btn-post" onclick="submitNews()">發佈新聞</button>
+    </div>
+</div>
+
+<script>
+    function handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append("file", file);
+        fetch("/api/news/upload-image", {
+            method: "POST",
+            body: formData
+        })
+            .then(res => res.text())
+            .then(url => {
+                localStorage.setItem("uploadedNewsImageUrl", url);
+                const wrapper = document.createElement("div");
+                wrapper.style.position = "relative";
+                wrapper.style.display = "inline-block";
+                wrapper.style.marginRight = "10px";
+                const img = document.createElement("img");
+                img.src = window.location.origin + url;
+                img.style.width = "150px";
+                img.style.border = "1px solid #ccc";
+                img.style.borderRadius = "6px";
+                const removeBtn = document.createElement("button");
+                removeBtn.textContent = "x";
+                removeBtn.style.position = "absolute";
+                removeBtn.style.top = "2px";
+                removeBtn.style.right = "2px";
+                removeBtn.style.border = "none";
+                removeBtn.style.background = "#fff";
+                removeBtn.style.color = "#333";
+                removeBtn.style.cursor = "pointer";
+                removeBtn.style.fontSize = "14px";
+                removeBtn.style.padding = "2px 6px";
+                removeBtn.onclick = () => {
+                    wrapper.remove();
+                    localStorage.removeItem("uploadedNewsImageUrl");
+                };
+                wrapper.appendChild(img);
+                wrapper.appendChild(removeBtn);
+                document.getElementById("previewArea").innerHTML = "";
+                document.getElementById("previewArea").appendChild(wrapper);
+            })
+            .catch(err => alert("圖片上傳失敗：" + err));
+    }
+</script>
+</body>
+</html>

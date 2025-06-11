@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>爪印物語-新增貼文</title>
+    <style>
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+            margin: 0;
+            background: url('image/555.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 120px;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        nav {
+            display: flex;
+            align-items: center; /* 對齊頭像與文字 */
+            gap: 20px; /* 控制間距 */
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(91, 108, 156, 0.8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .navbar .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+        }
+
+        .navbar nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+        }
+
+        .container {
+            background-color: #fff;
+            width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .header, .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .footer {
+            margin-top: 20px;
+        }
+        .user-info {
+            font-size: 14px;
+            color: #333;
+            margin-top: 10px;
+        }
+        .title-input {
+            font-size: 20px;
+            margin-top: 20px;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+        }
+        .title-input:focus {
+            outline: none;
+            border-bottom: 2px solid #666;
+        }
+        .toolbar {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .btn {
+            padding: 8px 20px;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-cancel {
+            background-color: #fff;
+            border: 1px solid #777;
+            color: #333;
+        }
+        .btn-post {
+            background-color: #4b4f3d;
+            color: #fff;
+        }
+        .content-input {
+            margin-top: 20px;
+            width: 100%;
+            height: 200px;
+            font-size: 14px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            resize: vertical;
+            box-sizing: border-box;
+            border-radius: 4px;
+            font-family: "Microsoft JhengHei", sans-serif;
+        }
+        .content-input:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        .emoji-panel {
+            display: none;
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 8px;
+            top: 100%;
+            z-index: 999;
+        }
+        .emoji-panel span {
+            cursor: pointer;
+            font-size: 18px;
+            margin: 0 4px;
+        }
+        .toolbar {
+            position: relative;
+        }
+        .theme-buttons {
+            margin-top: 15px;
+        }
+        .theme-buttons button {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .logo a {
+            color: white;             /* 原本的顏色 */
+            text-decoration: none;    /* 移除底線 */
+        }
+
+        .logo a:visited,
+        .logo a:hover,
+        .logo a:active,
+        .logo a:focus {
+            color: white;             /* 維持白色 */
+            text-decoration: none;    /* 確保所有狀態都沒底線 */
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="navbar">
+    <div class="logo"><a href="index_login.html">The Pet Forum</a></div>
+    <nav>
+        <a href="index_login.html">論壇</a>
+        <a href="QAindex.html">毛孩大考驗</a>
+        <a href="adopt.html">領養</a>
+        <a href="news.html">新聞</a>
+        <a href="profile.html" class="profile-icon">
+            <img id="avatarImg" src="default-avatar.png" alt="頭像" />
+        </a>
+    </nav>
+</div>
+
+<div class="container">
+    <div class="header">
+        <div>
+            <strong>類別</strong>
+            <select>
+                <option>選擇類別</option>
+                <option>狗狗</option>
+                <option>貓貓</option>
+                <option>魚魚</option>
+                <option>鳥類</option>
+                <option>鼠鼠</option>
+                <option>兔子</option>
+                <option>其他寵物</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="user-info">
+        發佈身分：<span id="postAuthor">載入中...</span>
+    </div>
+
+    <input type="text" class="title-input" placeholder="為文章撰寫標題">
+    <textarea class="content-input" placeholder="➕ 在此撰寫您的文章。新增照片、影片等以傳達您的訊息。"></textarea>
+
+    <div class="toolbar">
+        <i class="fa fa-camera" onclick="document.getElementById('videoUpload').click()"></i>
+        <input type="file" id="videoUpload" accept="video/*" style="display: none;" onchange="handleVideoUpload(event)">
+
+        <i class="fa fa-image" onclick="document.getElementById('imageUpload').click()"></i>
+        <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+
+        <i class="fa fa-smile" onclick="toggleEmojiPanel()"></i>
+        <div id="emojiPanel" class="emoji-panel">
+            <span onclick="insertEmoji('😊')">😊</span>
+            <span onclick="insertEmoji('😂')">😂</span>
+            <span onclick="insertEmoji('😍')">😍</span>
+            <span onclick="insertEmoji('😢')">😢</span>
+            <span onclick="insertEmoji('👍')">👍</span>
+            <span onclick="insertEmoji('🐶')">🐶</span>
+            <span onclick="insertEmoji('🐱')">🐱</span>
+            <span onclick="insertEmoji('❤️')">❤️</span>
+        </div>
+    </div>
+    <div id="previewArea" style="margin-top: 20px;">
+
+    </div>
+
+    <div class="footer">
+        <button class="btn btn-cancel" onclick="history.back()">取消</button>
+        <button class="btn btn-post" onclick="submitPost()">發佈</button>
+    </div>
+</div>
+
+<script>
+
+    // document.addEventListener("DOMContentLoaded", function () {
+        // 使用者頭像與名稱設定
+        const userId = localStorage.getItem("userId");
+        const userName = localStorage.getItem("userName");
+
+        if (userId && userName) {
+            const avatarImg = document.getElementById("avatarImg");
+            if (avatarImg) {
+                avatarImg.src = `/api/users/${userId}/avatar`;
+            }
+
+            const usernameDisplay = document.getElementById("usernameDisplay");
+            if (usernameDisplay) {
+                usernameDisplay.textContent = userName;
+            }
+        }
+
+
+    // 開啟 Emoji 面板
+    function toggleEmojiPanel() {
+        const panel = document.getElementById("emojiPanel");
+        panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+
+    // 插入 Emoji 到內容區域
+    function insertEmoji(emoji) {
+        const textarea = document.querySelector('.content-input');
+        textarea.value += emoji;
+        document.getElementById("emojiPanel").style.display = "none";
+    }
+
+    // 點擊外部隱藏 Emoji 面板
+    document.addEventListener('click', function(event) {
+        const panel = document.getElementById("emojiPanel");
+        const icon = document.querySelector('.fa-smile');
+        if (!panel.contains(event.target) && !icon.contains(event.target)) {
+            panel.style.display = "none";
+        }
+    });
+
+    function handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        fetch("/api/posts/upload-image", {
+            method: "POST",
+            body: formData
+        })
+            .then(res => res.text())
+            .then(url => {
+                localStorage.setItem("uploadedImageUrl", url);
+
+                const wrapper = document.createElement("div");
+                wrapper.style.position = "relative";
+                wrapper.style.display = "inline-block";
+                wrapper.style.marginRight = "10px";
+
+                const img = document.createElement("img");
+                img.src = window.location.origin + url;
+                img.style.width = "150px";
+                img.style.border = "1px solid #ccc";
+                img.style.borderRadius = "6px";
+
+                const removeBtn = document.createElement("button");
+                removeBtn.textContent = "x";
+                removeBtn.style.position = "absolute";
+                removeBtn.style.top = "2px";
+                removeBtn.style.right = "2px";
+                removeBtn.style.border = "none";
+                removeBtn.style.background = "#fff";
+                removeBtn.style.color = "#333";
+                removeBtn.style.cursor = "pointer";
+                removeBtn.style.fontSize = "14px";
+                removeBtn.style.padding = "2px 6px";
+                removeBtn.onclick = () => {
+                    wrapper.remove();
+                    localStorage.removeItem("uploadedImageUrl");
+                };
+
+                wrapper.appendChild(img);
+                wrapper.appendChild(removeBtn);
+                document.getElementById("previewArea").appendChild(wrapper); // ✅ 不要清空
+            })
+            .catch(err => alert("圖片上傳失敗：" + err));
+    }
+
+    function handleVideoUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        fetch("/api/posts/upload-video", {
+            method: "POST",
+            body: formData
+        })
+            .then(res => res.text())
+            .then(url => {
+                // 這裡的 url 就是 "/videos/xxx.mp4"
+
+                localStorage.setItem("uploadedVideoUrl", url);
+
+                const wrapper = document.createElement("div");
+                wrapper.style.position = "relative";
+                wrapper.style.display = "inline-block";
+                wrapper.style.marginRight = "10px";
+
+                const video = document.createElement("video");
+                // ===== 關鍵在這裡 =====
+                video.src = url; // 直接用後端回傳的 url
+                // 或 video.src = window.location.origin + url; 也可以
+                video.controls = true;
+                video.style.width = "200px";
+                video.style.borderRadius = "6px";
+
+                const removeBtn = document.createElement("button");
+                removeBtn.textContent = "x";
+                removeBtn.style.position = "absolute";
+                removeBtn.style.top = "2px";
+                removeBtn.style.right = "2px";
+                removeBtn.style.border = "none";
+                removeBtn.style.background = "#fff";
+                removeBtn.style.color = "#333";
+                removeBtn.style.cursor = "pointer";
+                removeBtn.style.fontSize = "14px";
+                removeBtn.style.padding = "2px 6px";
+                removeBtn.onclick = () => {
+                    wrapper.remove();
+                    localStorage.removeItem("uploadedVideoUrl");
+                };
+
+                wrapper.appendChild(video);
+                wrapper.appendChild(removeBtn);
+                document.getElementById("previewArea").appendChild(wrapper);
+            })
+            .catch(err => alert("影片上傳失敗：" + err));
+    }
+
+
+    // 載入使用者暱稱
+    window.addEventListener("DOMContentLoaded", function () {
+        const username = localStorage.getItem("userName");
+        const display = document.getElementById("postAuthor");
+        display.textContent = username || "未登入使用者";
+    });
+
+    // 發佈貼文
+    function submitPost() {
+        const title = document.querySelector('.title-input').value.trim();
+        const content = document.querySelector('.content-input').value.trim();
+        const category = document.querySelector('select').value;
+        const userId = localStorage.getItem("userId");
+
+        if (!title) {
+            alert("請填寫標題！");
+            return;
+        }
+        if (!content) {
+            alert("請填寫內容！");
+            return;
+        }
+
+        if (category === "選擇類別") {
+            alert("請選擇一個類別！");
+            return;
+        }
+
+        if (!userId) {
+            alert("您尚未登入，請先登入再發佈貼文！");
+            return;
+        }
+
+        if (title.length > 50) {
+            alert("標題請勿超過 50 字！");
+            return;
+        }
+
+        if (content.length > 500) {
+            alert("內容請勿超過 500 字！");
+            return;
+        }
+
+
+
+
+        const imageUrl = localStorage.getItem("uploadedImageUrl") || "";
+        const videoUrl = localStorage.getItem("uploadedVideoUrl") || "";
+
+        const data = {
+            userId: parseInt(userId),
+            title,
+            content,
+            category,
+            imageUrl,
+            videoUrl
+        };
+
+        fetch("/api/posts", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        })
+            .then(res => {
+                if (res.ok) {
+                    alert("貼文發佈成功！");
+                    localStorage.removeItem("uploadedImageUrl");
+                    localStorage.removeItem("uploadedVideoUrl");
+                    window.location.href = "/index_login.html";
+                } else {
+                    return res.text().then(text => alert("發佈失敗：" + text));
+                }
+            })
+            .catch(err => alert("發佈失敗：" + err.message));
+    }
+</script>
+
+</body>
+</html>

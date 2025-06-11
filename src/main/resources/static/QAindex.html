@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="utf-8" />
+  <title>爪印物語-🐾新手教室｜養寵入門知識講堂</title>
+  <style>
+    body,
+    header {
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    main {
+      padding-top: 100px;
+      /* 約略對應 navbar 高度 */
+    }
+
+    /* navbar.css */
+    .navbar {
+      background-color: rgba(91, 108, 156, 0.6);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 24px;
+      width: 100vw;
+      box-sizing: border-box;
+    }
+
+    .logo a {
+      color: white;
+      text-decoration: none;
+      font-size: 25px;
+      /* 可以調整成 2rem、24px 等 */
+      font-weight: bold;
+      /* 如果想更有份量感可以加粗 */
+    }
+
+    .logo a {
+      color: white;             /* 原本的顏色 */
+      text-decoration: none;    /* 移除底線 */
+    }
+
+    .logo a:visited,
+    .logo a:hover,
+    .logo a:active,
+    .logo a:focus {
+      color: white;             /* 維持白色 */
+      text-decoration: none;    /* 確保所有狀態都沒底線 */
+    }
+
+    .logo,
+    .logo a,
+    nav a,
+    .hero h1,
+    .hero h2 {
+      user-select: none;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      /* 確保在最上層 */
+    }
+
+    .logo a:visited,
+    .logo a:hover,
+    .logo a:active,
+    .logo a:focus {
+      color: white;
+      text-decoration: none;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      letter-spacing: 1px;
+      margin: 0 20px;
+    }
+
+    nav a:visited,
+    nav a:hover,
+    nav a:active,
+    nav a:focus {
+      color: white;
+      text-decoration: none;
+    }
+
+    body {
+      font-family: "Microsoft JhengHei", sans-serif;
+      background: linear-gradient(135deg, #f0fdfb, #fef9f4);
+      margin: 0;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #2c3e50;
+      margin-bottom: 0.5rem;
+      animation: fadeInDown 1s ease;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 2rem;
+      animation: fadeInDown 1.2s ease;
+    }
+
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: #fff;
+      padding: 1.2rem;
+      border-radius: 18px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+      width: 140px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: zoomIn 0.6s ease;
+      text-decoration: none;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 0.7rem;
+    }
+
+    .label {
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    @keyframes fadeInDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes zoomIn {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    header {
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      width: 100vw;
+      box-sizing: border-box;
+      padding: 24px 24px;
+      background-color: rgba(91, 108, 156, 0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      letter-spacing: 1px;
+      margin: 0 20px;
+    }
+
+    nav a:visited,
+    nav a:hover,
+    nav a:active,
+    nav a:focus {
+      color: white;
+      text-decoration: none;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .logo a {
+      color: white;             /* 原本的顏色 */
+      text-decoration: none;    /* 移除底線 */
+    }
+
+    .logo a:visited,
+    .logo a:hover,
+    .logo a:active,
+    .logo a:focus {
+      color: white;             /* 維持白色 */
+      text-decoration: none;    /* 確保所有狀態都沒底線 */
+    }
+
+  </style>
+</head>
+
+<main>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="logo"><a href="index.html">The Pet Forum</a></div>
+        <nav>
+          <a href="#" id="forumLink">論壇</a>
+          <a href="QAindex.html">毛孩大考驗</a>
+          <a href="adopt.html">領養</a>
+          <a href="news.html">新聞</a>
+          <a href="javascript:history.back()">返回</a>
+        </nav>
+      </div>
+    </header>
+  
+    <h1>🐾 新手教室｜養寵入門知識講堂</h1>
+    <h2>請選擇你想了解的寵物分類</h2>
+  
+    <div class="row">
+      <a class="card" href="QAdog.html"><img src="/image/QAdog.png" />
+        <div class="label">狗</div>
+      </a>
+      <a class="card" href="QAcat.html"><img src="image/QAcat.png" />
+        <div class="label">貓</div>
+      </a>
+      <a class="card" href="QAfish.html"><img src="image/QAfish.png" />
+        <div class="label">魚</div>
+      </a>
+    </div>
+    <div class="row">
+      <a class="card" href="QAbird.html"><img src="image/QAbird.jpg" />
+        <div class="label">鳥</div>
+      </a>
+      <a class="card" href="QArabbit.html"><img src="image/QArabbit.jpg" />
+        <div class="label">兔</div>
+      </a>
+      <a class="card" href="QAmouse.html"><img src="image/QAmouse.jpg" />
+        <div class="label">鼠</div>
+      </a>
+      <a class="card" href="QAother.html"><img src="image/QAother.png" />
+        <div class="label">其他</div>
+      </a>
+    </div>
+  </body>
+</main>
+
+</html>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('forumLink').addEventListener('click', function(e) {
+      e.preventDefault();
+      if (localStorage.getItem("userId") || localStorage.getItem("loginUser")) {
+        window.location.href = "index_login.html";
+      } else {
+        window.location.href = "index.html";
+      }
+    });
+  });
+</script>

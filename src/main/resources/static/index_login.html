@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>爪印物語</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<style>
+
+    nav {
+        display: flex;
+        align-items: center; /* 對齊頭像與文字 */
+        gap: 20px; /* 控制間距 */
+    }
+
+    .profile-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .profile-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .category-block {
+        margin-bottom: 30px;
+    }
+
+    .category {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .category:hover {
+        background-color: #f5f5f5;
+    }
+
+    .category img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .category h3 {
+        margin: 0;
+        font-size: 20px;
+        color: #333;
+    }
+
+    .category p {
+        margin-top: 8px;
+        font-size: 15px;
+        color: #555;
+        max-width: 600px;
+        line-height: 1.6;
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin-top: 20px;
+    }
+
+    .more-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: rgb(135, 155, 207,0.8);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .more-button:hover {
+        background-color: rgb(90, 107, 152,0.8);
+    }
+
+    .logo a {
+        color: white;             /* 原本的顏色 */
+        text-decoration: none;    /* 移除底線 */
+    }
+
+    .logo a:visited,
+    .logo a:hover,
+    .logo a:active,
+    .logo a:focus {
+        color: white;             /* 維持白色 */
+        text-decoration: none;    /* 確保所有狀態都沒底線 */
+    }
+
+    .logo,
+    .logo a,
+    nav a,
+    .hero h1,
+    .hero h2 {
+        user-select: none;
+    }
+
+</style>
+
+<header>
+    <div class="navbar">
+        <div class="logo"><a href="index_login.html">The Pet Forum</a></div>
+        <nav>
+            <a href="index_login.html">論壇</a>
+            <a href="QAindex.html">毛孩大考驗</a>
+            <a href="adopt.html">領養</a>
+            <a href="news.html">新聞</a>
+            <a href="profile.html" class="profile-icon">
+                <img id="avatarImg" src="default-avatar.png" alt="頭像" />
+            </a>
+        </nav>
+    </div>
+    <div class="hero">
+        <h1 style="font-size: 80px;">爪印物語</h1>
+        <h2>The Pet Forum</h2>
+    </div>
+</header>
+
+<main>
+
+    <section class="forum-toolbar">
+        <div class="toolbar-left">
+            <button class="tab" style="font-size: 15px">歡迎來到寵物論壇！</button>
+<!--            <button class="tab">所有文章</button>-->
+        </div>
+        <div class="toolbar-right">
+            <input type="text" id="searchInput" class="search-box" placeholder="🔍 搜尋" />
+<!--            <button class="action-btn" id="loginBtn">登入/註冊</button>-->
+            <button class="primary-btn" id="createPostBtn" onclick="location.href='create_post.html'">建立新文章</button>
+        </div>
+    </section>
+
+    <section class="forum-categories" style="padding: 40px;">
+        <h2 style="margin-left: 10px;">🐾 類別版區</h2>
+
+        </br>
+        <div id="postList"></div>  <!-- 這裡是顯示文章的區域 -->
+        </br>
+        <div class="category-block">
+            <div class="category" onclick="goToCategoryDetail('狗狗')">
+                <img src="image/dog.jpg" alt="狗狗版" />
+                <div>
+                    <h2>🐶 狗狗版</h2>
+                    <p>分享毛孩的日常點滴、健康照護、訓練技巧與趣事交流。歡迎狗奴們一起來交流彼此的經驗，成為更棒的主人！</p>
+                </div>
+            </div>
+            <hr />
+        </div>
+
+        <div class="category-block">
+            <div class="category" onclick="goToCategoryDetail('貓貓')">
+                <img src="image/catt.jpg" alt="貓貓版" />
+                <div>
+                    <h2>🐱 貓貓版</h2>
+                    <p>這裡是貓奴的天堂。無論是萌照、主子習性、罐罐挑選或貓咪健康問題，都能找到你的夥伴。</p>
+                </div>
+            </div>
+            <hr />
+        </div>
+
+        <div class="category-block">
+            <div class="category" onclick="goToCategoryDetail('魚魚')">
+                <img src="image/fish.jpg" alt="魚魚版" />
+                <div>
+                    <h2>🐟 魚魚版</h2>
+                    <p>從觀賞魚缸設計到水質維護，無論是鬥魚、金魚或熱帶小魚，這裡是愛魚人士的聚集地，讓我們一起探尋海底的奧妙。</p>
+                </div>
+            </div>
+            <hr />
+        </div>
+
+        <div class="category-block">
+            <div class="category" onclick="goToCategoryDetail('鳥類')">
+                <img src="image/bird.jpg" alt="鳥類版" />
+                <div>
+                    <h2>🐦 鳥類版</h2>
+                    <p>鸚鵡、鴿子、文鳥、八哥等羽毛寶貝的飼養知識、互動訓練與日常點滴，一起打造愛鳥樂園。</p>
+                </div>
+            </div>
+            <hr />
+        </div>
+
+        <div class="category-block">
+            <div class="category" onclick="goToCategoryDetail('鼠鼠')">
+                <img src="image/mouse.png" alt="鼠鼠版" />
+                <div>
+                    <h2>🐹 鼠鼠版</h2>
+                    <p>倉鼠體型雖嬌小，但魅力無限。從籠舍設計、飲食建議到繁殖知識，一起讓鼠寶過上幸福生活。</p>
+                </div>
+            </div>
+            <hr />
+        </div>
+
+        <div class="category-block">
+            <div class="category" onclick="goToCategoryDetail('兔子')">
+                <img src="image/rabbit.jpg" alt="兔子版" />
+                <div>
+                    <h2>🐰 兔子版</h2>
+                    <p>溫馴又可愛的兔兔，是許多家庭的最愛。討論飼養技巧、健康照護與品種特色，一起打造兔兔的天堂！</p>
+                </div>
+            </div>
+            <hr />
+        </div>
+
+            <div class="category-block">
+                <div class="category" onclick="goToCategoryDetail('其他寵物')">
+                    <img src="image/other.jpg" alt="其他寵物版" />
+                    <div>
+                        <h2>🌈 其他寵物</h2>
+                        <p>歡迎養刺蝟、蜜袋鼯、青蛙等特別小動物的你！想曬自己的寶貝嘛！這裡是非主流寵物交流的溫暖角落。</p>
+                    </div>
+                </div>
+                <hr />
+            </div>
+        </div>
+    </section>
+
+</main>
+
+&ensp;
+<section class="quote">
+    <img src="image/222.jpg" alt="Pot Quote" />
+    <blockquote>
+        "希望所有的毛孩都能被溫柔對待"
+        <footer>- 寵物論壇 </footer>
+    </blockquote>
+</section>
+
+<section class="subscribe">
+    <h3>寵物論壇:D</h3>
+</section>
+
+<script>
+
+
+
+    function goToCategoryDetail(category, description) {
+        localStorage.setItem("categoryDescription", description);
+        window.location.href = `postdetail.html?category=${encodeURIComponent(category)}`;
+    }
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // 使用者頭像與名稱設定
+        const userId = localStorage.getItem("userId");
+        const userName = localStorage.getItem("userName");
+
+        if (userId && userName) {
+            const avatarImg = document.getElementById("avatarImg");
+            if (avatarImg) {
+                avatarImg.src = `/api/users/${userId}/avatar`;
+            }
+
+            const usernameDisplay = document.getElementById("usernameDisplay");
+            if (usernameDisplay) {
+                usernameDisplay.textContent = userName;
+            }
+        }
+
+        // 登出按鈕
+        const logoutBtn = document.getElementById("logoutBtn");
+        if (logoutBtn) {
+            logoutBtn.addEventListener("click", function (event) {
+                event.preventDefault();
+                localStorage.removeItem("userEmail");
+                localStorage.removeItem("userName");
+                alert("您已成功登出！");
+                window.location.href = "/login.html";
+            });
+        }
+
+        // 建立文章、登入按鈕
+        document.getElementById("createPostBtn")?.addEventListener("click", function () {
+            window.location.href = "/create_post.html";
+        });
+
+        document.getElementById("loginBtn")?.addEventListener("click", function () {
+            window.location.href = "/login.html";
+        });
+
+        function goToCategoryDetail(categoryName, categoryDescription) {
+            localStorage.setItem("selectedCategory", categoryName);        // 例如 "dog"
+            localStorage.setItem("categoryDescription", categoryDescription);  // 例如 "這裡是狗狗的分享天地"
+            window.location.href = `postdetail.html?category=${encodeURIComponent(categoryName)}`;
+        }
+
+        // 搜尋功能（搜尋分類區塊內所有貼文）
+        const searchInput = document.getElementById("searchInput");
+
+        if (searchInput) {
+            searchInput.addEventListener("input", function () {
+                const keyword = this.value.trim().toLowerCase();
+
+                const categoryBlocks = document.querySelectorAll(".category-block");
+                categoryBlocks.forEach(block => {
+                    const title = block.querySelector("h2")?.textContent.toLowerCase() || "";
+                    const desc = block.querySelector("p")?.textContent.toLowerCase() || "";
+                    const posts = Array.from(block.querySelectorAll(".post-list li"));
+                    const matchInPosts = posts.some(post => post.textContent.toLowerCase().includes(keyword));
+
+                    if (
+                        keyword === "" ||
+                        title.includes(keyword) ||
+                        desc.includes(keyword) ||
+                        matchInPosts
+                    ) {
+                        block.style.display = "block";
+                    } else {
+                        block.style.display = "none";
+                    }
+                });
+            });
+        } else {
+            console.warn("searchInput 元素未找到！");
+        }
+    });
+
+
+
+</script>
+
+</body>
+</html>

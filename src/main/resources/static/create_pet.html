@@ -1,0 +1,563 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="zh-Hant">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8" />-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+<!--  <title>新增送養資訊</title>-->
+<!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">-->
+<!--  <style>-->
+<!--    body {-->
+<!--      margin: 0;-->
+<!--      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;-->
+<!--      background: url('image/555.jpg') no-repeat center center fixed;-->
+<!--      background-size: cover;-->
+<!--      position: relative;-->
+<!--    }-->
+
+<!--    body::before {-->
+<!--      content: "";-->
+<!--      position: fixed;-->
+<!--      top: 0;-->
+<!--      left: 0;-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      z-index: -1;-->
+<!--    }-->
+
+<!--    body.dark-mode::before {-->
+<!--      background-color: rgba(0, 0, 0, 0.4);-->
+<!--    }-->
+
+<!--    body.dark-mode {-->
+<!--      background-color: #1a1a1a;-->
+<!--      color: #f0f0f0;-->
+<!--    }-->
+
+<!--    header {-->
+<!--      background-color: rgba(91, 108, 156, 0.85);-->
+<!--      color: white;-->
+<!--      padding: 20px 60px;-->
+<!--      display: flex;-->
+<!--      justify-content: space-between;-->
+<!--      align-items: center;-->
+<!--    }-->
+
+<!--    .logo {-->
+<!--      font-size: 1.5rem;-->
+<!--      font-weight: bold;-->
+<!--    }-->
+
+<!--    nav {-->
+<!--      display: flex;-->
+<!--      align-items: center;-->
+<!--      gap: 20px;-->
+<!--    }-->
+
+<!--    nav a, nav button {-->
+<!--      color: white;-->
+<!--      background: none;-->
+<!--      border: none;-->
+<!--      font-size: 1rem;-->
+<!--      cursor: pointer;-->
+<!--      text-decoration: none;-->
+<!--    }-->
+
+<!--    main {-->
+<!--      display: flex;-->
+<!--      justify-content: center;-->
+<!--      padding: 60px 20px;-->
+<!--    }-->
+
+<!--    form {-->
+<!--      background-color: white;-->
+<!--      padding: 2.5rem;-->
+<!--      width: 100%;-->
+<!--      max-width: 600px;-->
+<!--      border-radius: 12px;-->
+<!--      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);-->
+<!--    }-->
+
+<!--    body.dark-mode form {-->
+<!--      background-color: #2a2a2a;-->
+<!--      color: white;-->
+<!--    }-->
+
+<!--    h2 {-->
+<!--      text-align: center;-->
+<!--      margin-bottom: 1.5rem;-->
+<!--    }-->
+
+<!--    label {-->
+<!--      display: block;-->
+<!--      margin-top: 1rem;-->
+<!--      font-weight: bold;-->
+<!--    }-->
+
+<!--    input, select, textarea {-->
+<!--      width: 100%;-->
+<!--      padding: 0.6rem;-->
+<!--      margin-top: 0.3rem;-->
+<!--      border: 1px solid #ccc;-->
+<!--      border-radius: 6px;-->
+<!--      font-size: 1rem;-->
+<!--    }-->
+
+<!--    textarea {-->
+<!--      resize: vertical;-->
+<!--    }-->
+
+<!--    button[type="submit"] {-->
+<!--      margin-top: 2rem;-->
+<!--      width: 100%;-->
+<!--      padding: 0.9rem;-->
+<!--      background-color: #414560;-->
+<!--      color: white;-->
+<!--      border: none;-->
+<!--      border-radius: 6px;-->
+<!--      font-size: 1.1rem;-->
+<!--      cursor: pointer;-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<header>-->
+<!--  <div class="logo">The Pet Forum</div>-->
+<!--  <nav>-->
+<!--    <a href="create_pet.html">送養</a>-->
+<!--    <a href="#">毛孩大考驗</a>-->
+<!--    <a href="adoption.html">領養</a>-->
+<!--    <button id="darkModeToggle" title="切換暗色模式">🌙</button>-->
+<!--    <a href="login.html">登入 / 註冊</a>-->
+<!--  </nav>-->
+<!--</header>-->
+
+<!--<main>-->
+<!--  <form id="petForm">-->
+<!--    <h2>新增送養資訊</h2>-->
+
+<!--    <label for="name">動物名字</label>-->
+<!--    <input type="text" id="name" name="name" required>-->
+
+<!--    <label for="age">動物年齡</label>-->
+<!--    <input type="number" id="age" name="age" required>-->
+
+<!--    <label for="gender">動物性別</label>-->
+<!--    <select id="gender" name="gender" required>-->
+<!--      <option value="" disabled selected>請選擇</option>-->
+<!--      <option>公</option>-->
+<!--      <option>母</option>-->
+<!--    </select>-->
+
+<!--    <label for="breed">品種</label>-->
+<!--    <input type="text" id="breed" name="breed" required>-->
+
+<!--    <label for="size">體型</label>-->
+<!--    <select id="size" name="size" required>-->
+<!--      <option value="" disabled selected>請選擇</option>-->
+<!--      <option>小型</option>-->
+<!--      <option>中型</option>-->
+<!--      <option>大型</option>-->
+<!--    </select>-->
+
+<!--    <label for="health">健康狀況</label>-->
+<!--    <input type="text" id="health" name="health" required>-->
+
+<!--    <label for="vaccinated">是否施打疫苗</label>-->
+<!--    <select id="vaccinated" name="vaccinated" required>-->
+<!--      <option value="" disabled selected>請選擇</option>-->
+<!--      <option value="true">是</option>-->
+<!--      <option value="false">否</option>-->
+<!--    </select>-->
+
+<!--    <label for="neutered">是否結紮</label>-->
+<!--    <select id="neutered" name="neutered" required>-->
+<!--      <option value="" disabled selected>請選擇</option>-->
+<!--      <option value="true">是</option>-->
+<!--      <option value="false">否</option>-->
+<!--    </select>-->
+
+<!--    <label for="description">其他說明</label>-->
+<!--    <textarea id="description" name="description" rows="4"></textarea>-->
+
+<!--    <label for="image">圖片上傳</label>-->
+<!--    <input type="file" id="image" name="image" accept="image/*" required>-->
+
+<!--    <button type="submit">送出</button>-->
+<!--  </form>-->
+<!--</main>-->
+
+<!--<script>-->
+<!--  document.addEventListener("DOMContentLoaded", () => {-->
+<!--    const toggleBtn = document.getElementById("darkModeToggle");-->
+
+<!--    function updateIcon(isDark) {-->
+<!--      toggleBtn.textContent = isDark ? "☀️" : "🌙";-->
+<!--    }-->
+
+<!--    const stored = localStorage.getItem("darkMode");-->
+<!--    const isDarkMode = stored === "true";-->
+<!--    if (isDarkMode) {-->
+<!--      document.body.classList.add("dark-mode");-->
+<!--    }-->
+<!--    updateIcon(isDarkMode);-->
+
+<!--    toggleBtn.addEventListener("click", () => {-->
+<!--      const isDark = document.body.classList.toggle("dark-mode");-->
+<!--      localStorage.setItem("darkMode", isDark ? "true" : "false");-->
+<!--      updateIcon(isDark);-->
+<!--    });-->
+<!--  });-->
+
+<!--  const formData = new FormData();-->
+<!--  formData.append('name', nameInput.value);-->
+<!--  formData.append('age', ageInput.value);-->
+<!--  formData.append('gender', genderInput.value);-->
+<!--  formData.append('breed', breedInput.value);-->
+<!--  formData.append('size', sizeInput.value);-->
+<!--  formData.append('health', healthInput.value);-->
+<!--  formData.append('vaccinated', vaccinatedInput.checked); // 布林-->
+<!--  formData.append('neutered', neuteredInput.checked);     // 布林-->
+<!--  formData.append('description', descriptionInput.value);-->
+<!--  formData.append('image', imageInput.files[0]);-->
+
+<!--  fetch('/api/pets', {-->
+<!--    method: 'POST',-->
+<!--    body: formData-->
+<!--  });-->
+
+
+<!--  document.getElementById("petForm").addEventListener("submit", function (e) {-->
+<!--    e.preventDefault();-->
+
+<!--    const form = document.getElementById("petForm");-->
+<!--    const formData = new FormData(form);-->
+
+<!--    fetch("/api/pets", {-->
+<!--      method: "POST",-->
+<!--      body: formData-->
+<!--    })-->
+<!--            .then(response => {-->
+<!--              if (!response.ok) {-->
+<!--                throw new Error("上傳失敗");-->
+<!--              }-->
+<!--              return response.text();-->
+<!--            })-->
+<!--            .then(data => {-->
+<!--              alert("✅ 上傳成功！");-->
+<!--              form.reset();-->
+<!--            })-->
+<!--            .catch(error => {-->
+<!--              alert("❌ 錯誤：" + error.message);-->
+<!--            });-->
+<!--  });-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>爪印物語-新增送養資訊</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: url('image/555.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    body.dark-mode::before {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    body.dark-mode {
+      background-color: #1a1a1a;
+      color: #f0f0f0;
+    }
+
+    header {
+      background-color: rgba(91, 108, 156, 0.85);
+      color: white;
+      padding: 20px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav a, nav button {
+      color: white;
+      background: none;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    main {
+      display: flex;
+      justify-content: center;
+      padding: 60px 20px;
+    }
+
+    form {
+      background-color: white;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    body.dark-mode form {
+      background-color: #2a2a2a;
+      color: white;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    .input-wrap {
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="file"],
+    select,
+    textarea {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: inherit;
+      color: inherit;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button[type="submit"] {
+      margin-top: 2rem;
+      width: 100%;
+      padding: 0.9rem;
+      background-color: #414560;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .profile-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">The Pet Forum</div>
+  <nav>
+    <a href="index_login.html">論壇</a>
+    <a href="QAindex.html">毛孩大考驗</a>
+    <a href="adopt.html">領養</a>
+    <a onclick="history.back()">返回前頁</a>
+
+  </nav>
+</header>
+
+<main>
+  <form id="petForm">
+    <h2>新增送養資訊</h2>
+
+    <label for="name">動物名字</label>
+    <div class="input-wrap">
+      <input type="text" id="name" name="name" required>
+    </div>
+
+    <label for="age">動物年齡</label>
+    <div class="input-wrap">
+      <input type="number" id="age" name="age" required>
+    </div>
+
+    <label for="gender">動物性別</label>
+    <div class="input-wrap">
+      <select id="gender" name="gender" required>
+        <option value="" disabled selected>請選擇</option>
+        <option>公</option>
+        <option>母</option>
+      </select>
+    </div>
+
+    <label for="breed">品種</label>
+    <div class="input-wrap">
+      <input type="text" id="breed" name="breed" required>
+    </div>
+
+    <label for="size">體型</label>
+    <div class="input-wrap">
+      <select id="size" name="size" required>
+        <option value="" disabled selected>請選擇</option>
+        <option>小型</option>
+        <option>中型</option>
+        <option>大型</option>
+      </select>
+    </div>
+
+    <label for="health">健康狀況</label>
+    <div class="input-wrap">
+      <input type="text" id="health" name="health" required>
+    </div>
+
+    <label for="vaccinated">是否施打疫苗</label>
+    <div class="input-wrap">
+      <select id="vaccinated" name="vaccinated" required>
+        <option value="" disabled selected>請選擇</option>
+        <option value="true">是</option>
+        <option value="false">否</option>
+      </select>
+    </div>
+
+    <label for="neutered">是否結紮</label>
+    <div class="input-wrap">
+      <select id="neutered" name="neutered" required>
+        <option value="" disabled selected>請選擇</option>
+        <option value="true">是</option>
+        <option value="false">否</option>
+      </select>
+    </div>
+
+    <label for="description">其他說明</label>
+    <div class="input-wrap">
+      <textarea id="description" name="description" rows="4"></textarea>
+    </div>
+
+    <label for="image">圖片上傳</label>
+    <div class="input-wrap">
+      <input type="file" id="image" name="image" accept="image/*" required>
+    </div>
+
+    <button type="submit">送出</button>
+  </form>
+</main>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggleBtn = document.getElementById("darkModeToggle");
+    function updateIcon(isDark) {
+      if (!toggleBtn) return;
+      toggleBtn.textContent = isDark ? "☀️" : "🌙";
+    }
+    const stored = localStorage.getItem("darkMode");
+    const isDarkMode = stored === "true";
+    if (isDarkMode) {
+      document.body.classList.add("dark-mode");
+    }
+    updateIcon(isDarkMode);
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", () => {
+        const isDark = document.body.classList.toggle("dark-mode");
+        localStorage.setItem("darkMode", isDark ? "true" : "false");
+        updateIcon(isDark);
+      });
+    }
+  });
+
+    // 頭像顯示
+    const userId = localStorage.getItem("userId");
+    const userName = localStorage.getItem("userName");
+    if (userId) {
+      const avatarImg = document.getElementById("avatarImg");
+      if (avatarImg) {
+        avatarImg.src = `/api/users/${userId}/avatar`;
+      }
+    }
+
+    // 表單送出
+    document.getElementById("petForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const form = document.getElementById("petForm");
+      const formData = new FormData(form);
+      fetch("/api/pets", {
+        method: "POST",
+        body: formData
+      })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error("上傳失敗");
+                }
+                return response.text();
+              })
+              .then(data => {
+                alert("✅ 上傳成功！");
+                window.history.back();
+              })
+              .catch(error => {
+                alert("❌ 錯誤：" + error.message);
+              });
+    });
+
+</script>
+
+</body>
+</html>

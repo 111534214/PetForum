@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>爪印物語-🐰兔兔新手教室</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #f9fbe7);
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .quiz-card {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 700px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    h1, h2 {
+      color: #2c6e91;
+      text-align: center;
+    }
+    .option-label {
+      display: block;
+      margin: 1rem 0;
+      font-size: 1.1rem;
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #f8f9fa;
+      cursor: pointer;
+    }
+    .correct {
+      background-color: #d4edda !important;
+      border-color: #28a745 !important;
+    }
+    .wrong {
+      background-color: #f8d7da !important;
+      border-color: #dc3545 !important;
+    }
+    .result {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+    .progress {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: #666;
+    }
+    .ending-img {
+      width: 80%;
+      margin-top: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .btn {
+      padding: 10px 20px;
+      background: #2c6e91;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+  </style>
+
+<style>
+.option-label {
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease;
+}
+.option-label:hover {
+  transform: scale(1.03);
+  background-color: #e3f2fd;
+}
+.option-label:active {
+  transform: scale(0.98);
+}
+</style>
+
+</head>
+<body>
+  <div class="quiz-card" id="start-container">
+    <h1>🐰 兔兔新手教室</h1>
+    <p>請輸入您的暱稱：</p>
+    <input type="text" id="nickname" placeholder="輸入暱稱" style="padding: 8px; width: 80%;">
+    <button onclick="startQuiz()" class="btn">開始測驗</button>
+  </div>
+
+  <div class="quiz-card" id="quiz-container" style="display:none;">
+    <div class="progress" id="progressBar">第 1 / 10 題</div>
+    <div id="quiz-content"></div>
+  </div>
+
+  <center>
+    <div class="quiz-card" id="result-container" style="display:none;">
+      <h2>🎉 測驗完成！</h2>
+      <p id="final-score"></p>
+      <p>「柔軟的毛，藏著最純真的信任；每一次跳躍，都是對幸福的奔馳。」</p>
+      <p>「照顧兔子，就像呵護一份悄悄綻放的溫柔。」</p>
+      <img src="image/QArabbit2.jpg" width="650px" height="400px">
+      <div>
+        <button onclick="restartQuiz()" class="btn">🔁 再玩一次</button>
+        <a href="#" id="forumLink"><button class="btn">🏠 回首頁</button></a>
+      </div>
+    </div>
+  </center>
+  
+  
+
+  <script>
+    let questions = [
+    {question: "兔子的主要食物是？", options: shuffle(["牧草", "白飯", "狗糧", "餅乾"]), correct: "牧草"},
+      {question: "兔子可以洗澡嗎？", options: shuffle(["不建議洗澡", "每週洗一次", "每月泡澡", "天天洗"]), correct: "不建議洗澡"},
+      {question: "兔子為什麼會磨牙？", options: shuffle(["牙齒持續生長", "覺得無聊", "故意搗蛋", "腸胃不適"]), correct: "牙齒持續生長"},
+      {question: "兔子的排便狀況反映？", options: shuffle(["健康狀況", "耳朵狀態", "毛色漂亮與否", "體溫"]), correct: "健康狀況"},
+      {question: "兔子適合住在什麼樣的環境？", options: shuffle(["通風乾燥、安靜", "冷氣房", "廚房", "潮濕浴室"]), correct: "通風乾燥、安靜"},
+      {question: "兔子有什麼習性？", options: shuffle(["喜歡啃東西", "愛叫", "會游泳", "喜歡洗澡"]), correct: "喜歡啃東西"},
+      {question: "兔子多久需要剪指甲？", options: shuffle(["1個月", "1週", "不用剪", "半年剪一次"]), correct: "1個月"},
+      {question: "下列哪一項最適合當兔子零食？", options: shuffle(["乾燥蒲公英葉", "巧克力", "洋蔥", "水果糖"]), correct: "乾燥蒲公英葉"},
+      {question: "兔子能不能單獨飼養？", options: shuffle(["可以但需多陪伴", "不行，必須兩隻以上", "必須和狗住一起", "只能群養"]), correct: "可以但需多陪伴"},
+      {question: "兔子開心時的表現？", options: shuffle(["跳起來轉圈", "咆哮", "躲起來", "磨牆角"]), correct: "跳起來轉圈"}
+    ];
+    let current = 0, score = 0, userNickname = '', answered = false;
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function startQuiz() {
+      const nameInput = document.getElementById("nickname");
+      if (!nameInput.value.trim()) {
+        alert("請輸入暱稱再開始測驗。");
+        return;
+      }
+      userNickname = nameInput.value.trim();
+      document.getElementById("start-container").style.display = 'none';
+      document.getElementById("quiz-container").style.display = 'block';
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      answered = false;
+      if (current >= questions.length) {
+        document.getElementById("quiz-container").style.display = 'none';
+        document.getElementById("result-container").style.display = 'block';
+        document.getElementById("final-score").innerText = `您的得分：${score} 分`;
+        return;
+      }
+      const q = questions[current];
+      document.getElementById("progressBar").innerText = `第 ${current + 1} / ${questions.length} 題`;
+      let html = `<h2>🧠 題目：${q.question}</h2>`;
+      q.options.forEach(opt => {
+        html += `<label class="option-label"><input type="radio" name="answer" value="${opt}" onclick="checkAnswer('${opt}')"> ${opt}</label>`;
+      });
+      html += `<div id="feedback" class="result"></div>`;
+      document.getElementById("quiz-content").innerHTML = html;
+    }
+
+    function checkAnswer(selected) {
+      if (answered) return;
+      answered = true;
+      const correct = questions[current].correct;
+      const labels = document.querySelectorAll(".option-label");
+      labels.forEach(label => {
+        if (label.textContent.includes(correct)) label.classList.add("correct");
+        else if (label.textContent.includes(selected)) label.classList.add("wrong");
+      });
+      if (selected === correct) {
+        score += 10;
+        document.getElementById("feedback").innerText = "✔️ 恭喜你答對了！";
+      } else {
+        document.getElementById("feedback").innerText = "❌ 答錯了，正確答案是：" + correct;
+      }
+      setTimeout(() => {
+        current++;
+        renderQuestion();
+      }, 1000);
+    }
+
+    function restartQuiz() {
+      current = 0;
+      score = 0;
+      answered = false;
+      shuffle(questions);
+      document.getElementById("result-container").style.display = 'none';
+      document.getElementById("quiz-container").style.display = 'block';
+      renderQuestion();
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById('forumLink').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (localStorage.getItem("userId") || localStorage.getItem("loginUser")) {
+          window.location.href = "index_login.html";
+        } else {
+          window.location.href = "index.html";
+        }
+      });
+    });
+  </script>
+</body>
+</html>

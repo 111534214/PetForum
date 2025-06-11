@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>爪印物語-寵物領養</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+        }
+        header {
+            background-color: rgba(91, 108, 156, 0.8);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .logo a {
+            color: white;
+            text-decoration: none;
+        }
+        .logo a:visited,
+        .logo a:hover,
+        .logo a:active,
+        .logo a:focus {
+            color: white;
+            text-decoration: none;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: opacity 0.2s;
+        }
+        nav a:hover {
+            opacity: 0.8;
+        }
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .hero {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.2rem;
+            color: #333;
+        }
+        .hero p {
+            color: #333;
+            font-size: 1.1rem;
+        }
+        .pet-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .pet-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .pet-card:hover {
+            transform: translateY(-5px);
+        }
+        .pet-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .pet-info {
+            padding: 1rem;
+        }
+        .pet-info h3 {
+            margin: 0 0 0.5rem;
+        }
+        .pet-info p {
+            margin: 0.25rem 0;
+            color: #555;
+        }
+        .adopt-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1.5rem;
+            background-color:  rgb(46, 61, 102);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .adopt-btn:hover {
+            background-color: rgb(39, 50, 82);
+        }
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 4% auto;
+            padding: 20px;
+            border-radius: 12px;
+            width: 92vw;
+            max-width: 420px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #888;
+            cursor: pointer;
+        }
+        #confirmAdopt {
+            margin-top: 20px;
+            padding: 0.5rem 1.5rem;
+            background-color: rgb(46, 61, 102);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        /* 表單 */
+        .modal-content input,
+        .modal-content textarea,
+        .modal-content select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.3rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        .modal-content label {
+            display: block;
+            text-align: left;
+            margin: 0.5rem 0 0.2rem;
+        }
+        .modal-content button[type="submit"] {
+            margin-top: 1rem;
+            padding: 0.5rem 1.5rem;
+            background-color: rgb(46, 61, 102);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2rem; }
+            .modal-content { max-width: 97vw; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="navbar">
+        <div class="logo"><a href="index_login.html">The Pet Forum</a></div>
+        <nav>
+            <a href="index_login.html">論壇</a>
+            <a href="QAindex.html">毛孩大考驗</a>
+            <a href="adopt.html">領養</a>
+            <a onclick="history.back()">返回前頁</a>
+        </nav>
+    </div>
+</header>
+
+<div class="hero">
+    <h1>🐾 寵物領養</h1>
+    <p>找到屬於你的毛小孩吧！</p>
+</div>
+
+
+<section class="pet-container" id="petContainer">
+    <!-- JS 動態產生寵物卡片 -->
+</section>
+
+<!-- 詳細資料 Modal -->
+<div id="adoptModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>動物詳細資料</h2>
+        <div id="animalDetail"></div>
+        <button id="confirmAdopt">確認領養</button>
+    </div>
+</div>
+<!-- 表單 Modal -->
+<div id="formModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>請填寫領養表單</h2>
+        <form id="adoptForm">
+            <input type="hidden" id="petId" name="petId">
+            <label for="name">姓名</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            <label for="phone">聯絡電話</label>
+            <input type="text" id="phone" name="phone" required>
+            <label for="address">居住地區</label>
+            <input type="text" id="address" name="address" required>
+            <label for="experience">照顧經驗</label>
+            <textarea id="experience" name="experience" rows="2"></textarea>
+            <label for="identityNumber">身分證字號</label>
+            <input type="text" id="identityNumber" name="identityNumber" required>
+            <label for="birthday">生日</label>
+            <input type="date" id="birthday" name="birthday" required>
+            <label for="job">職業</label>
+            <input type="text" id="job" name="job">
+            <label for="householdType">居住類型</label>
+            <select id="householdType" name="householdType">
+                <option value="">請選擇</option>
+                <option value="透天">透天</option>
+                <option value="公寓">公寓</option>
+                <option value="大樓">大樓</option>
+            </select>
+            <div style="display: flex; justify-content: center; margin: 1rem 0;">
+                <label style="display: flex; align-items: center; gap: 8px; white-space: nowrap;">
+                    <input type="checkbox" id="hasOtherPets" name="hasOtherPets">
+                    家中是否已有其他寵物
+                </label>
+            </div>
+            <label for="reason">為什麼想領養這隻動物？</label>
+            <textarea id="reason" name="reason" rows="2"></textarea>
+            <div style="display: flex; justify-content: center; margin: 1rem 0;">
+                <label style="display: flex; align-items: center; gap: 8px; white-space: nowrap;">
+                    <input type="checkbox" id="commitment" name="commitment" required>
+                    我承諾會善待並照顧牠
+                </label>
+            </div>
+            <button type="submit">送出申請</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // 載入所有寵物
+        fetch("/api/animals")
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById("petContainer");
+                if (!Array.isArray(data) || data.length === 0) {
+                    container.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">目前沒有可領養的寵物</p>';
+                    return;
+                }
+                container.innerHTML = ""; // 清空原本內容
+                data.forEach(pet => {
+                    const card = document.createElement("div");
+                    card.className = "pet-card";
+                    card.innerHTML = `
+                  <img src="${pet.image ? pet.image : '/uploads/images/ad_c.jpg'}" alt="${pet.name}" />
+                  <div class="pet-info">
+                    <h3>${pet.name}</h3>
+                    <p>年齡：${pet.age} 歲</p>
+                    <p>${pet.description || ''}</p>
+                    <button class="adopt-btn" data-pet-id="${pet.id}">我要領養</button>
+                  </div>
+                `;
+                    container.appendChild(card);
+                });
+
+                // 綁定每個「我要領養」按鈕點擊事件
+                document.querySelectorAll(".adopt-btn").forEach(btn => {
+                    btn.addEventListener("click", e => {
+                        const petId = btn.getAttribute("data-pet-id");
+                        const pet = data.find(p => p.id == petId);
+                        // 詳細內容塞進彈窗
+                        document.getElementById("animalDetail").innerHTML = `
+                        <div style="display:flex;flex-direction:column;align-items:center;">
+                            <img src="${pet.image ? pet.image : '/uploads/images/ad_c.jpg'}"
+                                alt="${pet.name}"
+                                style="width:220px;height:220px;object-fit:cover;border-radius:12px;box-shadow:0 2px 10px #bbb;margin-bottom:1rem;">
+                            <h3 style="margin:0 0 0.5rem;">${pet.name}</h3>
+                            <table style="width:100%;max-width:350px;border-collapse:collapse;">
+                                <tr><td><strong>年齡</strong></td><td>${pet.age} 歲</td></tr>
+                                <tr><td><strong>性別</strong></td><td>${pet.gender || "未填寫"}</td></tr>
+                                <tr><td><strong>品種</strong></td><td>${pet.breed || "未填寫"}</td></tr>
+                                <tr><td><strong>體型</strong></td><td>${pet.size || "未填寫"}</td></tr>
+                                <tr><td><strong>健康狀況</strong></td><td>${pet.health || "未填寫"}</td></tr>
+                                <tr><td><strong>已施打疫苗</strong></td><td>${pet.vaccinated ? "是" : "否"}</td></tr>
+                                <tr><td><strong>已結紮</strong></td><td>${pet.neutered ? "是" : "否"}</td></tr>
+                            </table>
+                            <div style="margin-top:1rem;width:100%;max-width:350px;text-align:left;">
+                                <strong>其他說明：</strong>
+                                <div style="margin-top:0.3rem;">${pet.description || "無"}</div>
+                            </div>
+                        </div>
+                    `;
+                        document.getElementById("petId").value = pet.id;
+                        document.getElementById("adoptModal").style.display = "block";
+                    });
+                });
+            })
+            .catch(err => {
+                document.getElementById("petContainer").innerHTML = '<p style="grid-column: 1/-1; text-align:center;color:red;">載入失敗，請稍後再試</p>';
+            });
+
+        // Modal 關閉
+        document.querySelectorAll(".close-btn").forEach(btn => {
+            btn.onclick = () => {
+                btn.closest(".modal").style.display = "none";
+            };
+        });
+        window.onclick = function (event) {
+            document.querySelectorAll(".modal").forEach(m => {
+                if (event.target === m) m.style.display = "none";
+            });
+        };
+
+        // 確認領養：打開表單
+        document.getElementById("confirmAdopt").addEventListener("click", () => {
+            document.getElementById("adoptModal").style.display = "none";
+            document.getElementById("formModal").style.display = "block";
+        });
+
+        // 表單送出
+        document.getElementById("adoptForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const payload = {
+                petId: parseInt(document.getElementById("petId").value),
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                phone: document.getElementById("phone").value,
+                address: document.getElementById("address").value,
+                experience: document.getElementById("experience").value,
+                identityNumber: document.getElementById("identityNumber").value,
+                birthday: document.getElementById("birthday").value,
+                job: document.getElementById("job").value,
+                householdType: document.getElementById("householdType").value,
+                hasOtherPets: document.getElementById("hasOtherPets").checked,
+                reason: document.getElementById("reason").value,
+                commitment: document.getElementById("commitment").checked
+            };
+            fetch("/api/adopt", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message || "已送出領養申請！");
+                    document.getElementById("formModal").style.display = "none";
+                })
+                .catch(err => {
+                    alert("送出失敗，請稍後再試");
+                });
+        });
+    });
+</script>
+
+</body>
+</html>

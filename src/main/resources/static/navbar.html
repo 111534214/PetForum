@@ -1,0 +1,81 @@
+<style>
+  body,
+  header {
+    margin: 0;
+    padding: 0;
+    user-select: none;
+  }
+
+  main {
+    padding-top: 100px;
+    /* 約略對應 navbar 高度 */
+  }
+
+  /* navbar.css */
+  .navbar {
+    background-color: rgba(91, 108, 156, 0.6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 24px;
+    width: 100vw;
+    box-sizing: border-box;
+  }
+
+  .logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 25px;
+    /* 可以調整成 2rem、24px 等 */
+    font-weight: bold;
+    /* 如果想更有份量感可以加粗 */
+
+  }
+
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    /* 確保在最上層 */
+  }
+
+  .logo a:visited,
+  .logo a:hover,
+  .logo a:active,
+  .logo a:focus {
+    color: white;
+    text-decoration: none;
+  }
+
+  nav a {
+    color: white;
+    text-decoration: none;
+    letter-spacing: 1px;
+    margin: 0 20px;
+  }
+
+  nav a:visited,
+  nav a:hover,
+  nav a:active,
+  nav a:focus {
+    color: white;
+    text-decoration: none;
+  }
+</style>
+<!-- navbar.html -->
+<header>
+  <div class="navbar">
+    <div class="logo"><a href="index_login.html">The Pet Forum</a></div>
+    <nav>
+      <a href="index_login.html">論壇</a>
+      <a href="news.html">新聞</a>
+      <a href="adopt.html">領養</a>
+      <a class="profile-icon" href="profile.html">
+        <img alt="頭像" id="avatarImg" src="default-avatar.png" />
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- body外加main -->

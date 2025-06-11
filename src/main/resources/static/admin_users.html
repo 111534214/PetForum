@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <title>爪印物語-使用者後台管理</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: #f3f6fa;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 16px #ccc;
+            padding: 30px;
+        }
+        h1 {
+            color: #344;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px 8px;
+            text-align: left;
+        }
+        th {
+            background: #f4f6fa;
+        }
+        .action-btn {
+            padding: 4px 12px;
+            background: #b23b3b;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 4px;
+        }
+        .action-btn.view {
+            background: #5c9c7c;
+        }
+        .search-bar input {
+            padding: 6px;
+            width: 200px;
+        }
+        tbody tr:hover {
+            background: #e6f0fa;
+            transition: background 0.15s;
+        }
+        #pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #pagination button {
+            margin: 0 2px;
+            padding: 4px 10px;
+            border: 1px solid #bbb;
+            background: #fff;
+            color: #344;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #pagination button[disabled] {
+            background: #e6f0fa;
+            color: #aaa;
+            cursor: default;
+        }
+        #pagination button.current {
+            background: #e6f0fa;
+            color: #344;
+            font-weight: bold;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        .search-bar {
+            flex: 1 1 auto;
+        }
+        .toolbar-right {
+            flex-shrink: 0;
+        }
+        .primary-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #566c47;
+            color: white;
+            text-decoration: none;
+        }
+        /* navbar.css */
+        body, header {
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+        main {
+            padding-top: 100px; /* 約略對應 navbar 高度 */
+        }
+        .navbar {
+            background-color: rgba(91, 108, 156, 0.6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 24px;
+            width: 100vw;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
+        .logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        .logo a:visited,
+        .logo a:hover,
+        .logo a:active,
+        .logo a:focus {
+            color: white;
+            text-decoration: none;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            letter-spacing: 1px;
+            margin: 0 20px;
+        }
+        nav a:visited,
+        nav a:hover,
+        nav a:active,
+        nav a:focus {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<header>
+    <div class="navbar">
+        <div class="logo"><a href="index_login.html">The Pet Forum</a></div>
+        <nav>
+            <a href="index_login.html">論壇</a>
+            <a href="QAindex.html">毛孩大考驗</a>
+            <a href="adopt.html">領養</a>
+            <a onclick="history.back()">返回前頁</a>
+        </nav>
+    </div>
+</header>
+<body>
+<div style="height: 100px;"></div>
+<div class="container">
+    <h1>使用者管理</h1>
+    <div class="toolbar">
+        <div class="search-bar">
+            <input type="text" id="searchInput" class="search-box" placeholder="🔍 搜尋" />
+        </div>
+
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>帳號</th>
+            <th>電話號碼</th>
+            <th>信箱</th>
+            <th>註冊時間</th>
+            <th>狀態</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="usersTbody">
+        <tr><td colspan="6" style="text-align:center;">載入中...</td></tr>
+        </tbody>
+    </table>
+    <div id="pagination"></div>
+</div>
+<script>
+    let lastUsersData = [];
+    let currentPage = 1;
+    const pageSize = 20;
+
+    function loadUsers() {
+        const keyword = document.getElementById('searchInput').value.trim();
+        let url = "/api/admin/users";
+        if (keyword) url += "?q=" + encodeURIComponent(keyword);
+        fetch(url)
+            .then(res => {
+                if (!res.ok) throw new Error("API 錯誤");
+                return res.json();
+            })
+            .then(users => {
+                if (!Array.isArray(users)) users = [];
+                lastUsersData = users;
+                currentPage = 1;
+                renderUsers(users, currentPage);
+            })
+            .catch(err => {
+                const tbody = document.getElementById('usersTbody');
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#c00;">載入失敗</td></tr>`;
+                document.getElementById('pagination').innerHTML = "";
+                console.warn(err);
+            });
+    }
+
+    function renderUsers(users, page = 1) {
+        const tbody = document.getElementById('usersTbody');
+        if (!users || users.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">查無資料</td></tr>`;
+            document.getElementById('pagination').innerHTML = "";
+            return;
+        }
+        // 分頁
+        const start = (page - 1) * pageSize;
+        const end = start + pageSize;
+        const pageUsers = users.slice(start, end);
+
+        tbody.innerHTML = pageUsers.map(user => {
+            let username = user.username || user.account || "未知";
+            let phoneNumber = user.phoneNumber || "—";
+            let email = user.email || "—";
+            let created = user.createdAt ? new Date(user.createdAt).toLocaleString() : "";
+            let status = user.status || (user.banned ? "停權" : "正常");
+            return `
+        <tr>
+          <td>${username}</td>
+          <td>${phoneNumber}</td>
+          <td>${email}</td>
+          <td>${created}</td>
+          <td>${status}</td>
+          <td>
+            <button class="action-btn view" onclick="viewUser(${user.id})">查看</button>
+            <button class="action-btn" onclick="deleteUser(${user.id})">刪除</button>
+          </td>
+        </tr>
+        `;
+        }).join('');
+
+        renderPagination(users.length, page);
+    }
+
+    function renderPagination(total, page) {
+        const pageCount = Math.ceil(total / pageSize);
+        let html = '';
+
+        // 保證就算只有 1 頁也顯示分頁
+        // 上一頁
+        if (page > 1) {
+            html += `<button onclick="gotoPage(${page - 1})">&lt;</button>`;
+        } else {
+            html += `<button disabled>&lt;</button>`;
+        }
+
+        // 頁碼
+        for (let i = 1; i <= pageCount; i++) {
+            if (i === page) {
+                html += `<button class="current" disabled>${i}</button>`;
+            } else {
+                html += `<button onclick="gotoPage(${i})">${i}</button>`;
+            }
+        }
+
+        // 下一頁
+        if (page < pageCount) {
+            html += `<button onclick="gotoPage(${page + 1})">&gt;</button>`;
+        } else {
+            html += `<button disabled>&gt;</button>`;
+        }
+
+        document.getElementById('pagination').innerHTML = html;
+    }
+
+    function gotoPage(page) {
+        currentPage = page;
+        renderUsers(lastUsersData, page);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        if (searchInput) {
+            searchInput.addEventListener("input", function () {
+                filterUsers(this.value.trim().toLowerCase());
+            });
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') loadUsers();
+            });
+        }
+        loadUsers();
+    });
+
+    function filterUsers(keyword) {
+        const tbody = document.getElementById('usersTbody');
+        const trs = tbody.querySelectorAll('tr');
+        trs.forEach(tr => {
+            if (tr.children.length < 6) return;
+            const [accountTd, phoneTd, emailTd, createdTd, statusTd] = tr.children;
+            const text = (
+                (accountTd.textContent || "") +
+                (phoneTd.textContent || "") +
+                (emailTd.textContent || "") +
+                (createdTd.textContent || "") +
+                (statusTd.textContent || "")
+            ).toLowerCase();
+
+            if (keyword === "" || text.includes(keyword)) {
+                tr.style.display = "";
+            } else {
+                tr.style.display = "none";
+            }
+        });
+    }
+
+    function viewUser(id) {
+        window.open(`userdetailview.html?userId=${id}`, '_blank');
+    }
+    function deleteUser(id) {
+        if (!confirm("確定要刪除這個使用者嗎？")) return;
+        fetch(`/api/users/${id}`, { method: "DELETE" })
+            .then(res => {
+                if (res.ok) {
+                    alert("刪除成功！");
+                    loadUsers();
+                } else {
+                    res.text().then(msg => alert("刪除失敗：" + msg));
+                }
+            });
+    }
+</script>
+</body>
+</html>

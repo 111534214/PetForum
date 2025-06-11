@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>新聞列表</title>
+    <style>
+        body {
+            background: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+
+        /* ========= Navbar 樣式統一 ========= */
+        .navbar {
+            background-color: rgba(91, 108, 156, 0.8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;  /* 統一 padding */
+            width: 100vw;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .navbar nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .navbar nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        .navbar nav a:visited,
+        .navbar nav a:hover,
+        .navbar nav a:active,
+        .navbar nav a:focus {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* ========= News List 樣式 ========= */
+        .news-list-container {
+            max-width: 780px;
+            margin: 80px auto 40px auto; /* 上方空間變大以避免被navbar蓋住 */
+        }
+        .news-card {
+            background: #fff;
+            border-radius: 12px;
+            margin-bottom: 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            display: flex;
+            align-items: flex-start;
+            padding: 20px;
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+        }
+        .news-card:hover {
+            box-shadow: 0 4px 16px rgba(39,94,220,0.11);
+        }
+        .news-image {
+            width: 120px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 22px;
+            background: #eee;
+        }
+        .news-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .news-title {
+            font-size: 1.22rem;
+            font-weight: bold;
+            color: #275edc;
+            margin: 0 0 9px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .news-snippet {
+            color: #222;
+            font-size: 1.07rem;
+            margin-bottom: 8px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* 顯示兩行 */
+            -webkit-box-orient: vertical;
+        }
+        .news-meta {
+            color: #888;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+
+<header class="navbar">
+    <a href="index.html" class="logo">The Pet Forum</a>
+    <nav>
+        <a href="index.html">論壇</a>
+        <a href="QAindex.html">毛孩大考驗</a>
+        <a href="adopt.html">領養</a>
+        <a href="news.html">新聞</a>
+        <a onclick="history.back()">返回前頁</a>
+    </nav>
+</header>
+
+
+<body>
+<div class="news-list-container" id="news-list"></div>
+
+<script>
+    // 取得 category
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get('category');
+
+    // 防呆
+    if (!category) {
+        document.getElementById('news-list').innerHTML = "請指定分類";
+        throw new Error("No category");
+    }
+
+    function truncate(str, n) {
+        if (!str) return "";
+        return str.length > n ? str.substr(0, n) + '...' : str;
+    }
+
+    fetch(`/api/news/category/${category}`)
+        .then(res => res.json())
+        .then(list => {
+            let html = "";
+            if(!Array.isArray(list) || list.length === 0){
+                html = "<div>查無此分類的新聞。</div>";
+            } else {
+                list.forEach(news => {
+                    html += `
+                    <div class="news-card" onclick="window.location.href='news_detail_single.html?id=${news.id}'">
+                     <div class="news-info">
+                            <div class="news-title">${news.title}</div>
+                            <div class="news-snippet">${truncate(news.content, 60)}</div>
+                            <div class="news-meta">發文時間：${news.publishDate ? news.publishDate.substring(0,10) : ''}</div>
+                        </div>
+                    </div>
+                    `;
+                });
+            }
+            document.getElementById('news-list').innerHTML = html;
+        })
+        .catch(() => {
+            document.getElementById('news-list').innerHTML = "載入失敗";
+        });
+</script>
+</body>
+</html>

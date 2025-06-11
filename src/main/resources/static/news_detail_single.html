@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>新聞內容</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body { background: #f9f9f9; font-family: Arial, sans-serif; margin: 0; }
+    .navbar {
+      background-color: rgba(91, 108, 156, 0.8);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      width: 100vw;
+      box-sizing: border-box;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+    .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+      margin-right: 20px;
+    }
+    .navbar nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .navbar nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 1.1em;
+    }
+    .navbar nav a:visited,
+    .navbar nav a:hover,
+    .navbar nav a:active,
+    .navbar nav a:focus {
+      color: white;
+      text-decoration: none;
+    }
+    .profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .profile-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .news-detail-container {
+      max-width: 760px;
+      margin: 100px auto 40px auto; /* 上方 margin 增大避免被 navbar 遮住 */
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 36px 40px;
+    }
+    .news-detail-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 18px;
+      color: #275edc;
+    }
+    .news-detail-meta {
+      color: #777;
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+    }
+    .news-detail-img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      max-height: 340px;
+      object-fit: cover;
+      background: #eee;
+    }
+    .news-detail-content {
+      font-size: 1.13rem;
+      line-height: 1.8;
+      color: #222;
+    }
+    .news-detail-video {
+      width: 100%;
+      max-width: 600px;
+      margin: 24px auto;
+      display: block;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: #275edc;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    @media (max-width: 800px) {
+      .news-detail-container { padding: 20px 5vw; }
+      .navbar { padding: 14px 10vw; }
+    }
+    @media (max-width: 600px) {
+      .news-detail-container { padding: 10px 4vw; }
+      .navbar { padding: 10px 2vw; }
+      .logo { font-size: 1.2em; }
+    }
+  </style>
+</head>
+<body>
+<header class="navbar">
+  <a href="index.html" class="logo">The Pet Forum</a>
+  <nav>
+    <a href="index.html">論壇</a>
+    <a href="QAindex.html">毛孩大考驗</a>
+    <a href="news.html">新聞</a>
+    <a href="adopt.html">領養</a>
+    <a onclick="history.back()">返回前頁</a>
+  </nav>
+</header>
+
+<div class="news-detail-container" id="news-detail"></div>
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const newsId = urlParams.get('id');
+
+  if (!newsId) {
+    document.getElementById('news-detail').innerHTML = "無效的新聞ID";
+    throw new Error('No news id');
+  }
+
+  fetch(`/api/news/${newsId}`)
+          .then(res => res.json())
+          .then(news => {
+            document.getElementById('news-detail').innerHTML = `
+        <div class="news-detail-title">${news.title}</div>
+        <div class="news-detail-meta">
+          分類：${news.category}　
+          發布日：${(news.publish_date || '').substring(0,10)}
+        </div>
+        ${news.image_url ? `<img src="${news.image_url}" class="news-detail-img" alt="News Image">` : ''}
+        <div class="news-detail-content">${(news.content || '').replace(/\n/g,'<br>')}</div>
+        ${news.video_url ? `<video class="news-detail-video" controls src="${news.video_url}"></video>` : ''}
+        <div class="back-link" onclick="history.back()">← 返回上一頁</div>
+      `;
+          })
+          .catch(err => {
+            document.getElementById('news-detail').innerHTML = "找不到新聞內容";
+          });
+</script>
+</body>
+</html>

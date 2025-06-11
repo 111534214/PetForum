@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爪印物語-貼文詳情</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: url('image/555.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: rgba(91, 108, 156, 0.8);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        nav a {
+            margin-left: 1.5rem;
+            color: white;
+            text-decoration: none;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+        .post-container {
+            width: 800px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+        }
+        .post-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .post-meta {
+            font-size: 1rem;
+            color: #777;
+            margin-bottom: 20px;
+        }
+        .post-content {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .post-actions button {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #414560;
+        }
+        .post-actions button:hover {
+            color: #ff6b6b;
+        }
+        .liked {
+            color: #ff6b6b !important;
+        }
+        #favoriteBtn:hover {
+            color: #FFD700;
+        }
+        .favorited {
+            color: #FFD700;
+        }
+        #favoriteBtn { order: 2; }
+        #likeBtn { order: 1; }
+        .comments-section {
+            border-top: 1px solid #ccc;
+            margin-top: 30px;
+            padding-top: 20px;
+        }
+        /* profile.html 風格留言卡片 */
+        .comment-card {
+            background-color: white;
+            padding: 15px 20px 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.08);
+            margin-bottom: 18px;
+            position: relative;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #888;
+            margin-right: 0;
+        }
+        .comment-content-block {
+            flex: 1;
+        }
+        .comment-author {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 2px;
+        }
+        .comment-text {
+            margin-top: 6px;
+            color: #555;
+            font-size: 1rem;
+        }
+        .comment-meta {
+            font-size: 0.88em;
+            color: #888;
+            margin: 2px 0 0 0;
+        }
+        .edit-btn, .delete-btn {
+            margin-top: 8px;
+            margin-right: 6px;
+            padding: 2px 12px;
+            background: #5b6c9c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.98em;
+        }
+        .edit-btn:hover {
+            background: #3e4977;
+        }
+        .delete-btn {
+            background: #b23b3b;
+        }
+        .delete-btn:hover {
+            background: #922d2d;
+        }
+        .edit-area {
+            width: 98%;
+            margin-top: 4px;
+            border-radius: 4px;
+            font-size: 1em;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+        .save-btn, .cancel-btn {
+            margin-top: 6px;
+            margin-right: 6px;
+            padding: 2px 10px;
+            border-radius: 4px;
+            border: none;
+            font-size: 0.96em;
+            cursor: pointer;
+        }
+        .save-btn {
+            background: #5b6c9c;
+            color: white;
+        }
+        .cancel-btn {
+            background: #ccc;
+            color: #333;
+        }
+        .save-btn:hover { background: #3e4977; }
+        .cancel-btn:hover { background: #888; }
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
+        }
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            resize: none;
+        }
+        .comment-form button {
+            width: 100px;
+            padding: 0.6rem;
+            background-color: #414560;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .comment-form button:hover {
+            background-color: #333;
+        }
+        /* 其他預設樣式... */
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">The Pet Forum</div>
+    <nav>
+        <a href="index_login.html">論壇</a>
+        <a href="QAindex.html">毛孩大考驗</a>
+        <a href="adopt.html">領養</a>
+        <a href="news.html">新聞</a>
+        <a href="javascript:history.back()">返回</a>
+    </nav>
+</header>
+
+<main>
+    <div id="loadingMessage" style="display: none; text-align: center; margin-bottom: 20px;">
+        文章載入中...
+    </div>
+    <div id="errorMessage" style="display: none; color: red; text-align: center; margin-bottom: 20px;">
+        載入文章失敗，請稍後再試。
+    </div>
+    <div class="post-container" id="postContainer" style="display:none;">
+        <h1 class="post-title" id="postTitle">標題</h1>
+        <button id="editPostBtn" style="display:none;">編輯</button>
+        <button id="savePostBtn" style="display:none;">儲存</button>
+        <div class="post-meta" id="postMeta">發佈者：留言者1 | 發佈時間：2025年5月10日</div>
+        <div class="post-content" id="postContent"><p>內容...</p></div>
+        <div class="post-image" id="postImage" style="display:none;"><img src="" alt="貼文圖片" id="imageElement" style="width: 100%; max-width: 600px; margin-top: 20px;"></div>
+        <div class="post-video" id="postVideo" style="display:none;"><video id="videoElement" width="100%" controls></video></div>
+        <div class="post-actions">
+            <button id="likeBtn" aria-label="Like">
+                <i id="likeIcon" class="far fa-heart"></i>
+            </button>
+            <button id="favoriteBtn" aria-label="Favorite">
+                <i id="favoriteIcon" class="far fa-bookmark"></i>
+            </button>
+        </div>
+        <!-- 留言區 -->
+        <div class="comments-section" id="commentsList"></div>
+        <!-- 發表新留言 -->
+        <div class="comment-form">
+            <textarea id="commentInput" placeholder="寫下你的評論..."></textarea>
+            <button id="submitCommentBtn">發表評論</button>
+        </div>
+    </div>
+</main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const postId = urlParams.get('postId');
+        const userId = localStorage.getItem("userId");
+
+        // 判斷是否已編輯過
+        function isEdited() {
+            let editedPosts = JSON.parse(localStorage.getItem("editedPosts") || "{}");
+            return editedPosts[postId];
+        }
+
+        // 留言表單權限判斷
+        function toggleCommentForm() {
+            const commentForm = document.querySelector('.comment-form');
+            // 改這行，只要 userId 有值就能留言
+            const userId = localStorage.getItem("userId");
+            const commentsList = document.getElementById('commentsList');
+            const oldHint = document.getElementById('loginHint');
+            if (oldHint) oldHint.remove();
+            if (!userId) {
+                if (commentForm) commentForm.style.display = 'none';
+                const hint = document.createElement('div');
+                hint.id = 'loginHint';
+                hint.style.color = 'red';
+                hint.style.margin = '16px 0';
+                hint.textContent = '請先登入才能留言。';
+                commentsList.appendChild(hint);
+            } else {
+                if (commentForm) commentForm.style.display = '';
+            }
+        }
+
+        // 載入文章資料
+        fetch(`http://localhost:8080/api/posts/${postId}`)
+            .then(response => response.json())
+            .then(post => {
+                if (!post) {
+                    alert("無法載入文章！");
+                    return;
+                }
+                if (userId && userId == post.userId && !isEdited()) {
+                    document.getElementById("editPostBtn").style.display = "inline-block";
+                }
+                document.getElementById("postTitle").textContent = post.title;
+                // 這裡改成 innerHTML，並判斷「更新於」
+                const created = post.created_at || post.createdAt;
+                const updated = post.updated_at || post.updatedAt;
+                const date = new Date(created);
+                const formattedDate = date.toLocaleString('zh-TW', {
+                    year: 'numeric', month: '2-digit', day: '2-digit',
+                    hour: '2-digit', minute: '2-digit'
+                });
+                let meta = `發佈者：${post.username} | 發佈時間：${formattedDate}`;
+                if (
+                    updated && created &&
+                    new Date(updated).getTime() !== new Date(created).getTime()
+                ) {
+                    const updatedText = new Date(updated).toLocaleString('zh-TW', {
+                        year: 'numeric', month: '2-digit', day: '2-digit',
+                        hour: '2-digit', minute: '2-digit'
+                    });
+                    meta += `<br>更新於：${updatedText}`;
+                }
+                document.getElementById("postMeta").innerHTML = meta;
+                document.getElementById("postContent").innerHTML = post.content;
+                if (post.image_url) {
+                    document.getElementById("imageElement").src = post.image_url;
+                    document.getElementById("postImage").style.display = "block";
+                } else {
+                    document.getElementById("postImage").style.display = "none";
+                }
+                if (post.video_url) {
+                    const videoElement = document.getElementById("videoElement");
+                    videoElement.src = post.video_url;
+                    document.getElementById("postVideo").style.display = "block";
+                } else {
+                    document.getElementById("postVideo").style.display = "none";
+                }
+                loadStatus();
+                document.getElementById("loadingMessage").style.display = "none";
+                document.getElementById("postContainer").style.display = "block";
+                // 載入留言以及留言權限（載入文章成功後再做）
+                loadComments();
+                toggleCommentForm();
+            })
+            .catch(error => {
+                console.error("載入文章失敗", error);
+                document.getElementById("loadingMessage").style.display = "none";
+                document.getElementById("errorMessage").style.display = "block";
+            });
+
+        // 編輯貼文功能
+        document.getElementById("editPostBtn").addEventListener("click", function() {
+            const title = document.getElementById("postTitle");
+            const content = document.getElementById("postContent");
+            title.innerHTML = `<input id="editTitle" value="${title.textContent}" style="width:100%; font-size:2rem;">`;
+            content.innerHTML = `<textarea id="editContent" style="width:100%;height:200px;">${content.textContent}</textarea>`;
+            document.getElementById("savePostBtn").style.display = "inline-block";
+            this.style.display = "none";
+        });
+        document.getElementById("savePostBtn").addEventListener("click", function() {
+            const newTitle = document.getElementById("editTitle").value.trim();
+            const newContent = document.getElementById("editContent").value.trim();
+            if(!newTitle || !newContent) {
+                alert("標題與內容不能為空！");
+                return;
+            }
+            fetch(`http://localhost:8080/api/posts/${postId}`, {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({title: newTitle, content: newContent})
+            })
+                .then(res => res.json())
+                .then(data => {
+                    alert("文章已更新！");
+                    let editedPosts = JSON.parse(localStorage.getItem("editedPosts") || "{}");
+                    editedPosts[postId] = true;
+                    localStorage.setItem("editedPosts", JSON.stringify(editedPosts));
+                    document.getElementById("postTitle").textContent = newTitle;
+                    document.getElementById("postContent").textContent = newContent;
+                    document.getElementById("savePostBtn").style.display = "none";
+                })
+                .catch(err => alert("更新失敗，請稍後再試"));
+        });
+
+        // 按讚/收藏狀態
+        function loadStatus() {
+            if (!userId) return;
+            Promise.all([
+                fetch(`/api/like/status?userId=${userId}&postId=${postId}`).then(res => res.json()),
+                fetch(`/api/favorite/status?userId=${userId}&postId=${postId}`).then(res => res.json())
+            ])
+                .then(([likeData, favoriteData]) => {
+                    const likeIcon = document.getElementById("likeIcon");
+                    if (likeData.liked) {
+                        likeIcon.classList.remove("far");
+                        likeIcon.classList.add("fas", "liked");
+                        likeIcon.style.color = "red";
+                    } else {
+                        likeIcon.classList.remove("fas", "liked");
+                        likeIcon.classList.add("far");
+                        likeIcon.style.color = "black";
+                    }
+                    const favoriteIcon = document.getElementById("favoriteIcon");
+                    if (favoriteData.favorited) {
+                        favoriteIcon.classList.remove("far");
+                        favoriteIcon.classList.add("fas", "favorited");
+                        favoriteIcon.style.color = "gold";
+                    } else {
+                        favoriteIcon.classList.remove("fas", "favorited");
+                        favoriteIcon.classList.add("far");
+                        favoriteIcon.style.color = "black";
+                    }
+                })
+                .catch(err => console.error("載入按讚/收藏狀態失敗", err));
+        }
+        document.getElementById("likeBtn").addEventListener("click", () => {
+            if (!userId) {
+                alert("請先登入以使用按讚功能！");
+                return;
+            }
+            fetch(`/api/like?userId=${userId}&postId=${postId}`, {method: 'POST'})
+                .then(res => res.json())
+                .then(data => {
+                    const icon = document.getElementById("likeIcon");
+                    if (data.status === "liked") {
+                        icon.classList.remove("far");
+                        icon.classList.add("fas", "liked");
+                        icon.style.color = "red";
+                    } else {
+                        icon.classList.remove("fas", "liked");
+                        icon.classList.add("far");
+                        icon.style.color = "black";
+                    }
+                })
+                .catch(err => console.error("按讚失敗", err));
+        });
+        document.getElementById("favoriteBtn").addEventListener("click", () => {
+            if (!userId) {
+                alert("請先登入以使用收藏功能！");
+                return;
+            }
+            fetch(`/api/favorite?userId=${userId}&postId=${postId}`, {method: 'POST'})
+                .then(res => res.json())
+                .then(data => {
+                    const icon = document.getElementById("favoriteIcon");
+                    if (data.status === "favorited") {
+                        icon.classList.remove("far");
+                        icon.classList.add("fas", "favorited");
+                        icon.style.color = "gold";
+                    } else {
+                        icon.classList.remove("fas", "favorited");
+                        icon.classList.add("far");
+                        icon.style.color = "black";
+                    }
+                })
+                .catch(err => console.error("收藏失敗", err));
+        });
+
+        // 發表留言
+        document.getElementById("submitCommentBtn").addEventListener("click", function () {
+            const commentContent = document.getElementById("commentInput").value;
+            if (!userId || !postId || !commentContent.trim()) {
+                alert("請確認已登入並填寫留言內容！");
+                return;
+            }
+            fetch("http://localhost:8080/api/comments", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    userId: userId,
+                    postId: postId,
+                    content: commentContent
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    loadComments();
+                    document.getElementById("commentInput").value = "";
+                })
+                .catch(error => {
+                    console.error("留言錯誤", error);
+                    alert("留言失敗，請稍後再試！");
+                });
+        });
+
+        // 載入留言，只有自己留言才顯示編輯/刪除
+        function loadComments() {
+            fetch(`http://localhost:8080/api/comments/post/${postId}`)
+                .then(res => res.json())
+                .then(comments => {
+                    const commentsList = document.getElementById('commentsList');
+                    commentsList.innerHTML = '';
+                    const loginUserId = Number(localStorage.getItem("userId"));
+                    comments.forEach(comment => {
+                        const card = document.createElement('div');
+                        card.className = "comment-card";
+                        card.id = `comment-${comment.id}`;
+                        // 拿 comment 自己的 created/updated
+                        const created = comment.createdAt || comment.created_at;
+                        const updated = comment.updatedAt || comment.updated_at;
+                        let metaHTML = `發布於：${formatDate(created)}`;
+                        if (
+                            updated && created &&
+                            new Date(updated).getTime() !== new Date(created).getTime()
+                        ) {
+                            metaHTML += `<br>更新於：${formatDate(updated)}`;
+                        }
+
+                        card.innerHTML = `
+                    <img class="comment-avatar" src="${comment.avatarUrl || '/image/default_avatar.png'}" alt="${comment.username}的頭像">
+                    <div class="comment-content-block">
+                        <div class="comment-author">${comment.username}</div>
+                        <div class="comment-text" id="comment-text-${comment.id}">${comment.content}</div>
+                        <div class="comment-meta">${metaHTML}</div>
+                        ${loginUserId === comment.userId
+                            ? `<button class="edit-btn" onclick="startEditComment(${comment.id}, '${escapeQuote(comment.content)}')">編輯</button>
+                               <button class="delete-btn" onclick="deleteComment(${comment.id})">刪除</button>`
+                            : ""}
+                    </div>
+                `;
+                        commentsList.appendChild(card);
+                    });
+                    if (comments.length === 0) {
+                        commentsList.innerHTML = '<p>還沒有留言喔，快來搶沙發！</p>';
+                    }
+                })
+                .catch(err => {
+                    console.error('載入留言失敗', err);
+                    document.getElementById('commentsList').innerHTML = '<p>留言載入失敗，請稍後再試</p>';
+                });
+        }
+
+        window.startEditComment = function(commentId, content) {
+            const textElem = document.getElementById(`comment-text-${commentId}`);
+            if (!textElem) return;
+            if (document.getElementById(`edit-area-${commentId}`)) return;
+            textElem.innerHTML = `
+            <textarea id="edit-area-${commentId}" class="edit-area">${content}</textarea>
+            <button class="save-btn" onclick="saveEditComment(${commentId})">儲存</button>
+            <button class="cancel-btn" onclick="cancelEditComment(${commentId}, \`${content.replace(/`/g,"\\`")}\`)">取消</button>
+        `;
+        }
+        window.saveEditComment = function(commentId) {
+            const textarea = document.getElementById(`edit-area-${commentId}`);
+            if (!textarea) return;
+            const newContent = textarea.value.trim();
+            if (!newContent) {
+                alert("內容不能為空！");
+                return;
+            }
+            fetch(`http://localhost:8080/api/comments/${commentId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ content: newContent })
+            })
+                .then(res => {
+                    if (res.ok) return res.json();
+                    throw new Error("編輯失敗！");
+                })
+                .then(data => {
+                    alert("留言已編輯！");
+                    loadComments();
+                })
+                .catch(err => alert("留言編輯失敗：" + err.message));
+        }
+        window.cancelEditComment = function(commentId, content) {
+            const textElem = document.getElementById(`comment-text-${commentId}`);
+            if (!textElem) return;
+            textElem.textContent = content;
+        }
+        window.deleteComment = function(commentId) {
+            if (!confirm("確定要刪除這則留言嗎？")) return;
+            fetch(`http://localhost:8080/api/comments/${commentId}`, { method: "DELETE" })
+                .then(res => {
+                    if (res.ok) {
+                        alert("留言已刪除！");
+                        loadComments();
+                    } else {
+                        res.text().then(msg => alert("刪除留言失敗: " + msg));
+                    }
+                })
+                .catch(err => alert("刪除留言失敗: " + err));
+        }
+        // 工具函數
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            if (isNaN(date.getTime())) return "";
+            return date.toLocaleString('zh-TW', {
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit'
+            });
+        }
+        function escapeQuote(str) {
+            return (str || "").replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+        }
+    });
+</script>
+
+</body>
+</html>
+
+
